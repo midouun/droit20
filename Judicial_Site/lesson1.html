@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدرس 1: التطور التاريخي والمبادئ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-gold: #c5a059;
+            --primary-dark: #1a252f;
+            --secondary-dark: #2c3e50;
+            --text-light: #ecf0f1;
+            --bg-card: rgba(255, 255, 255, 0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* --- شريط التنقل --- */
+        nav {
+            background: rgba(26, 37, 47, 0.95);
+            padding: 15px 50px;
+            border-bottom: 2px solid var(--primary-gold);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-logo { font-family: 'Amiri'; font-size: 1.5rem; color: var(--primary-gold); }
+        .back-btn {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .back-btn:hover { color: var(--primary-gold); }
+
+        /* --- عنوان الدرس --- */
+        .lesson-header {
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1505664194779-8beaceb93744?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            border-bottom: 4px solid var(--primary-gold);
+        }
+
+        .lesson-header h1 {
+            font-family: 'Amiri';
+            font-size: 3.5rem;
+            color: var(--primary-gold);
+            margin-bottom: 10px;
+        }
+
+        /* --- قسم التطور التاريخي (Timeline) --- */
+        .timeline-section {
+            padding: 60px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Amiri';
+            font-size: 2.5rem;
+            color: var(--primary-gold);
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: ''; display: block; width: 80px; height: 3px;
+            background: var(--primary-gold); margin: 10px auto;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--primary-gold);
+            top: 0; bottom: 0; right: 50%;
+            margin-right: -3px;
+            border-radius: 5px;
+        }
+
+        .container {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+
+        .container.left { right: 0; text-align: left; }
+        .container.right { right: 50%; text-align: right; }
+
+        .content {
+            padding: 20px 30px;
+            background-color: var(--secondary-dark);
+            position: relative;
+            border-radius: 6px;
+            border: 1px solid var(--primary-gold);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: 0.3s;
+        }
+
+        .content:hover { transform: scale(1.02); background: #34495e; }
+
+        .date-badge {
+            background: var(--primary-gold);
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        /* دوائر التايم لاين */
+        .container::after {
+            content: '';
+            position: absolute;
+            width: 25px; height: 25px;
+            right: -12px; top: 25px;
+            background-color: var(--primary-dark);
+            border: 4px solid var(--primary-gold);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .container.right::after { right: auto; left: -13px; }
+
+        /* --- قسم المبادئ (Flip Cards) --- */
+        .principles-section {
+            padding: 60px 20px;
+            background-color: #222;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            height: 300px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%; height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%; height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            border: 1px solid var(--primary-gold);
+        }
+
+        .flip-card-front {
+            background-color: var(--secondary-dark);
+            color: var(--text-light);
+        }
+
+        .flip-card-front i { font-size: 4rem; color: var(--primary-gold); margin-bottom: 20px; }
+        .flip-card-front h3 { font-size: 1.5rem; }
+
+        .flip-card-back {
+            background-color: var(--primary-gold);
+            color: var(--primary-dark);
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-back p { line-height: 1.6; font-size: 1rem; }
+        .legal-ref {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            background: rgba(0,0,0,0.1);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        /* تصحيح الاتجاه للتايم لاين على الموبايل */
+        @media screen and (max-width: 600px) {
+            .timeline::after { right: 31px; }
+            .container { width: 100%; padding-right: 70px; padding-left: 25px; }
+            .container.right { right: 0%; text-align: left; }
+            .container.left { text-align: left; }
+            .container::after { right: 20px; }
+            .container.right::after { left: auto; right: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-logo"><i class="fas fa-balance-scale"></i> التنظيم القضائي</div>
+        <a href="index.html" class="back-btn"><i class="fas fa-home"></i> الرئيسية</a>
+    </nav>
+
+    <header class="lesson-header">
+        <h1>التطور التاريخي والمبادئ القضائية</h1>
+        <p>المحور الأول: من الاستقلال إلى إصلاحات 2022</p>
+    </header>
+
+    <section class="timeline-section">
+        <h2 class="section-title">مراحل تطور القضاء الجزائري</h2>
+        <div class="timeline">
+            
+            <div class="container right">
+                <div class="content">
+                    <span class="date-badge">1962 - 1965</span>
+                    <h3>المرحلة الانتقالية</h3>
+                    <p>استمرار العمل بالقوانين الفرنسية إلا ما تعارض مع السيادة الوطنية (قانون 157/62). تم تغيير "الصيغة التنفيذية" لتصدر باسم الشعب الجزائري.</p>
+                </div>
+            </div>
+
+            <div class="container left">
+                <div class="content">
+                    <span class="date-badge">1965 - 1996</span>
+                    <h3>مرحلة وحدة القضاء</h3>
+                    <p>أول إصلاح قضائي (أمر 278/65). تم توحيد الهرم القضائي (محاكم -> مجالس -> مجلس أعلى). المنازعات الإدارية كانت تنظر من قبل "غرف إدارية".</p>
+                </div>
+            </div>
+
+            <div class="container right">
+                <div class="content">
+                    <span class="date-badge">1996 - 2021</span>
+                    <h3>مرحلة الازدواجية القضائية</h3>
+                    <p>دستور 1996 (مادة 152) كرس الفصل بين القضاء العادي والإداري. ظهور "مجلس الدولة" و"محكمة التنازع".</p>
+                </div>
+            </div>
+
+            <div class="container left">
+                <div class="content">
+                    <span class="date-badge">2022 - اليوم</span>
+                    <h3>الإصلاحات الحديثة</h3>
+                    <p>صدور القانون العضوي 10/22 وتعديل الدستور 2020. استحداث "المحاكم الإدارية للاستئناف" لتكريس التقاضي على درجتين في المواد الإدارية.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="principles-section">
+        <h2 class="section-title">المبادئ الأساسية للعدالة</h2>
+        
+        <h3 style="text-align:center; color:#fff; margin-bottom:30px;">أولاً: المبادئ التي تجسد الحقوق</h3>
+        <div class="cards-grid">
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <i class="fas fa-door-open"></i>
+                        <h3>حق اللجوء للقضاء</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>حق دستوري لكل شخص للدفاع عن حقوقه ولا يمكن التنازل عنه. الاستثناء: اتفاق التحكيم.</p>
+                        <div class="legal-ref">المادة 164-165 من دستور 2020</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <i class="fas fa-users"></i>
+                        <h3>المساواة أمام القضاء</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>عدم التمييز بين المتقاضين مهما كان مركزهم. الاستثناء: الحصانة البرلمانية والدبلوماسية.</p>
+                        <div class="legal-ref">المادة 165 من الدستور</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <i class="fas fa-bullhorn"></i>
+                        <h3>علانية الجلسات</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>الأصل أن تكون الجلسات علنية للشفافية. الاستثناء: القضايا الأخلاقية، الأسرة، الأحداث.</p>
+                        <div class="legal-ref">المادة 169 من الدستور</div>
+                    </div>
+                </div>
+            </div>
+            
+             <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <i class="fas fa-comments"></i>
+                        <h3>مبدأ الوجاهية</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>حق الخصم في الاطلاع على أدلة وطلبات الطرف الآخر والرد عليها (حق الدفاع).</p>
+                        <div class="legal-ref">المادة 3 من قانون الإجراءات</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 style="text-align:center; color:#fff; margin:50px 0 30px;">ثانياً: المبادئ التي تجسد الالتزامات</h3>
+        <div class="cards-grid">
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <i class="fas fa-scale-balanced"></i>
+                        <h3>حياد القاضي</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>عدم التحيز لأي طرف، ويمتنع القاضي عن النظر في قضايا له فيها مصلحة (إمكانية الرد).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <i class="fas fa-pen-fancy"></i>
+                        <h3>تسبيب الأحكام</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>إلزام القاضي بذكر الأسباب القانونية والواقعية التي بنى عليها حكمه لضمان الرقابة.</p>
+                        <div class="legal-ref">المادة 169 من الدستور</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+</body>
+</html>
