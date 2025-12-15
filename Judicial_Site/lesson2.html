@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدرس 2: النظام القضائي العادي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-gold: #c5a059;
+            --primary-dark: #1a252f;
+            --secondary-dark: #2c3e50;
+            --text-light: #ecf0f1;
+            --active-color: #e67e22;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            padding-bottom: 50px;
+        }
+
+        /* --- نافبار --- */
+        nav {
+            background: rgba(26, 37, 47, 0.95);
+            padding: 15px 50px;
+            border-bottom: 2px solid var(--primary-gold);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-logo { font-family: 'Amiri'; font-size: 1.5rem; color: var(--primary-gold); }
+        .back-btn { text-decoration: none; color: var(--text-light); font-weight: bold; transition: 0.3s; }
+        .back-btn:hover { color: var(--primary-gold); }
+
+        /* --- العنوان --- */
+        header {
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1589216532380-16204f728b12?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            border-bottom: 4px solid var(--primary-gold);
+        }
+        header h1 { font-family: 'Amiri'; font-size: 3rem; color: var(--primary-gold); }
+
+        /* --- الهرم التفاعلي --- */
+        .pyramid-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 20px;
+        }
+
+        .pyramid-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 600px;
+            gap: 15px;
+        }
+
+        .pyramid-level {
+            text-align: center;
+            padding: 20px;
+            background: var(--secondary-dark);
+            border: 2px solid var(--primary-gold);
+            color: var(--primary-gold);
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.4s;
+            position: relative;
+            clip-path: polygon(10% 0, 90% 0, 100% 100%, 0% 100%); /* شكل شبه منحرف */
+        }
+
+        /* تعديل شكل القمة والقاعدة */
+        .pyramid-level.top { clip-path: polygon(50% 0, 100% 100%, 0% 100%); width: 40%; margin: 0 auto; }
+        .pyramid-level.middle { width: 70%; margin: 0 auto; }
+        .pyramid-level.base { width: 100%; margin: 0 auto; clip-path: none; border-radius: 10px; }
+
+        .pyramid-level:hover, .pyramid-level.active {
+            background: var(--primary-gold);
+            color: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        /* --- منطقة التفاصيل --- */
+        .details-container {
+            margin-top: 40px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .detail-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            border-radius: 10px;
+            padding: 30px;
+            display: none; /* مخفي افتراضياً */
+            animation: fadeIn 0.5s ease;
+        }
+
+        .detail-card.show { display: block; }
+
+        .detail-card h2 { color: var(--primary-gold); margin-bottom: 15px; font-family: 'Amiri'; }
+        .detail-card p { line-height: 1.8; margin-bottom: 20px; font-size: 1.1rem; }
+
+        /* --- القوائم (الأقسام والغرف) --- */
+        .grid-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .list-item {
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-right: 3px solid var(--primary-gold);
+            font-size: 0.9rem;
+        }
+
+        .note-box {
+            background-color: rgba(230, 126, 34, 0.1);
+            border: 1px dashed var(--active-color);
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+            font-size: 0.95rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-logo"><i class="fas fa-gavel"></i> التنظيم القضائي</div>
+        <a href="index.html" class="back-btn"><i class="fas fa-home"></i> الرئيسية</a>
+    </nav>
+
+    <header>
+        <h1>هياكل النظام القضائي العادي</h1>
+        <p>اضغط على أي مستوى في الهرم لعرض التفاصيل والاختصاصات</p>
+    </header>
+
+    <section class="pyramid-section">
+        
+        <div class="pyramid-container">
+            <div class="pyramid-level top" onclick="showDetail('supreme')">
+                <i class="fas fa-crown"></i> المحكمة العليا
+            </div>
+            <div class="pyramid-level middle" onclick="showDetail('council')">
+                <i class="fas fa-balance-scale-right"></i> المجالس القضائية
+            </div>
+            <div class="pyramid-level base" onclick="showDetail('court')">
+                <i class="fas fa-building"></i> المحاكم
+            </div>
+        </div>
+
+        <div class="details-container">
+            
+            <div id="court" class="detail-card">
+                <h2><i class="fas fa-building"></i> المحكمة (الدرجة الأولى)</h2>
+                <p>هي قاعدة الهرم القضائي، وتفصل في القضايا لأول مرة. أحكامها قابلة للاستئناف أمام المجلس القضائي.</p>
+                
+                <h3><i class="fas fa-sitemap"></i> أهم الأقسام:</h3>
+                <div class="grid-list">
+                    <div class="list-item">القسم المدني</div>
+                    <div class="list-item">قسم شؤون الأسرة</div>
+                    <div class="list-item">القسم العقاري</div>
+                    <div class="list-item">القسم الاجتماعي (عمالي)</div>
+                    <div class="list-item">القسم التجاري</div>
+                    <div class="list-item">قسم الجنح والمخالفات</div>
+                    <div class="list-item">قسم الأحداث</div>
+                </div>
+
+                <div class="note-box">
+                    <strong><i class="fas fa-info-circle"></i> ملاحظة:</strong> في المحاكم التجارية المتخصصة، يضم التشكيل مساعدين (تجار) إلى جانب القضاة.
+                </div>
+            </div>
+
+            <div id="council" class="detail-card">
+                <h2><i class="fas fa-balance-scale-right"></i> المجلس القضائي (الدرجة الثانية)</h2>
+                <p>يختص بالفصل في استئناف الأحكام الصادرة عن المحاكم. يهدف لتصحيح الأخطاء المحتملة لقاضي الدرجة الأولى.</p>
+                
+                <h3><i class="fas fa-layer-group"></i> الغرف والأجهزة:</h3>
+                <div class="grid-list">
+                    <div class="list-item">الغرفة المدنية</div>
+                    <div class="list-item">الغرفة العقارية</div>
+                    <div class="list-item">غرفة الاتهام (مراقبة التحقيق)</div>
+                    <div class="list-item">الغرفة الجزائية</div>
+                    <div class="list-item">محكمة الجنايات (ابتدائية واستئنافية)</div>
+                </div>
+
+                <div class="note-box">
+                    <strong><i class="fas fa-exclamation-triangle"></i> هام:</strong> محكمة الجنايات توجد بمقر المجلس لكنها جهة قضائية متميزة، وتتشكل من قضاة ومحلفين شعبيين.
+                </div>
+            </div>
+
+            <div id="supreme" class="detail-card">
+                <h2><i class="fas fa-crown"></i> المحكمة العليا (محكمة قانون)</h2>
+                <p>ليست درجة ثالثة للتقاضي! لا تعيد النظر في الوقائع، بل تراقب مدى صحة تطبيق القانون من طرف المجالس والمحاكم (الطعن بالنقض).</p>
+                
+                <h3><i class="fas fa-list-ol"></i> غرف المحكمة العليا (7 غرف):</h3>
+                <div class="grid-list">
+                    <div class="list-item">1. الغرفة المدنية</div>
+                    <div class="list-item">2. الغرفة العقارية</div>
+                    <div class="list-item">3. غرفة شؤون الأسرة والمواريث</div>
+                    <div class="list-item">4. الغرفة التجارية والبحرية</div>
+                    <div class="list-item">5. الغرفة الاجتماعية</div>
+                    <div class="list-item">6. الغرفة الجنائية (جنايات)</div>
+                    <div class="list-item">7. غرفة الجنح والمخالفات</div>
+                </div>
+
+                <div class="note-box">
+                    <strong>حالات خاصة:</strong> تنعقد كـ "غرف مجتمعة" لتوحيد الاجتهاد القضائي إذا حدث تناقض في القرارات.
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <script>
+        // دالة بسيطة لتبديل العرض بين البطاقات
+        function showDetail(id) {
+            // إخفاء جميع البطاقات
+            document.querySelectorAll('.detail-card').forEach(card => {
+                card.classList.remove('show');
+            });
+            // إزالة التفعيل من جميع طبقات الهرم
+            document.querySelectorAll('.pyramid-level').forEach(level => {
+                level.classList.remove('active');
+            });
+
+            // إظهار البطاقة المختارة وتفعيل الطبقة
+            document.getElementById(id).classList.add('show');
+            event.currentTarget.classList.add('active');
+        }
+
+        // تفعيل القاعدة (المحاكم) افتراضياً عند التحميل
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.pyramid-level.base').click();
+        });
+    </script>
+
+</body>
+</html>
