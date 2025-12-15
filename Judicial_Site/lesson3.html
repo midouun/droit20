@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدرس 3: النظام القضائي الإداري</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-gold: #c5a059;
+            --primary-dark: #1a252f;
+            --secondary-dark: #2c3e50;
+            --text-light: #ecf0f1;
+            --highlight: #27ae60;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            padding-bottom: 50px;
+        }
+
+        /* --- النافبار والهيدر --- */
+        nav {
+            background: rgba(26, 37, 47, 0.95);
+            padding: 15px 50px;
+            border-bottom: 2px solid var(--primary-gold);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky; top: 0; z-index: 100;
+        }
+        .nav-logo { font-family: 'Amiri'; font-size: 1.5rem; color: var(--primary-gold); }
+        .back-btn { text-decoration: none; color: var(--text-light); font-weight: bold; transition: 0.3s; }
+        .back-btn:hover { color: var(--primary-gold); }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1575505586569-646b2ca898fc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            border-bottom: 4px solid var(--primary-gold);
+        }
+        header h1 { font-family: 'Amiri'; font-size: 3rem; color: var(--primary-gold); margin-bottom: 15px; }
+        header p { font-size: 1.2rem; color: #ddd; max-width: 700px; margin: 0 auto; }
+
+        /* --- حاوية التبويبات --- */
+        .tabs-container {
+            max-width: 1000px;
+            margin: -30px auto 0; /* تداخل مع الهيدر */
+            background: var(--secondary-dark);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            overflow: hidden;
+            border: 1px solid var(--primary-gold);
+            position: relative;
+            z-index: 10;
+        }
+
+        .tabs-header {
+            display: flex;
+            background: rgba(0,0,0,0.2);
+            border-bottom: 1px solid var(--primary-gold);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 20px;
+            border: none;
+            background: transparent;
+            color: var(--text-light);
+            font-family: 'Amiri';
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .tab-btn:hover { background: rgba(255,255,255,0.05); }
+
+        .tab-btn.active {
+            background: var(--primary-gold);
+            color: var(--primary-dark);
+            font-weight: bold;
+        }
+
+        /* --- محتوى التبويبات --- */
+        .tab-content {
+            padding: 40px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        .tab-content.active { display: block; }
+
+        .tab-content h2 { color: var(--primary-gold); margin-bottom: 20px; font-family: 'Amiri'; border-bottom: 2px dashed #555; padding-bottom: 10px; display: inline-block; }
+        .tab-content p { line-height: 1.8; margin-bottom: 20px; font-size: 1.1rem; }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .info-box {
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-right: 4px solid var(--highlight);
+            border-radius: 5px;
+        }
+
+        .info-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.1rem; }
+        .info-box p { font-size: 0.95rem; color: #ccc; margin: 0; }
+        
+        .special-role {
+            margin-top: 30px;
+            background: rgba(197, 160, 89, 0.1);
+            border: 1px solid var(--primary-gold);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        /* --- قائمة المحاكم الستة --- */
+        .courts-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .courts-list li {
+            background: rgba(255,255,255,0.05);
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+        .courts-list li i { color: var(--primary-gold); margin-left: 10px; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .tabs-header { flex-direction: column; }
+            .tab-btn { border-bottom: 1px solid rgba(255,255,255,0.1); }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-logo"><i class="fas fa-university"></i> التنظيم القضائي</div>
+        <a href="index.html" class="back-btn"><i class="fas fa-home"></i> الرئيسية</a>
+    </nav>
+
+    <header>
+        <h1>النظام القضائي الإداري</h1>
+        <p>الهيئات المختصة بالفصل في المنازعات التي تكون الدولة أو الولاية أو البلدية أو المؤسسات العمومية الإدارية طرفاً فيها.</p>
+    </header>
+
+    <div class="tabs-container">
+        <div class="tabs-header">
+            <button class="tab-btn active" onclick="openTab(event, 'tab1')"><i class="fas fa-landmark"></i> المحاكم الإدارية</button>
+            <button class="tab-btn" onclick="openTab(event, 'tab2')"><i class="fas fa-balance-scale"></i> المحاكم الإدارية للاستئناف</button>
+            <button class="tab-btn" onclick="openTab(event, 'tab3')"><i class="fas fa-gavel"></i> مجلس الدولة</button>
+        </div>
+
+        <div id="tab1" class="tab-content active">
+            <h2>المحاكم الإدارية (الدرجة الأولى)</h2>
+            <p>هي قاعدة الهرم القضائي الإداري، حلت محل "الغرف الإدارية" القديمة. تفصل ابتدائياً في النزاعات الإدارية بحكم قابل للاستئناف.</p>
+            
+            <div class="info-grid">
+                <div class="info-box">
+                    <h3><i class="fas fa-users"></i> التشكيلة</h3>
+                    <p>تشكيلة جماعية (3 قضاة على الأقل) برئاسة مستشار، وبحضور "محافظ الدولة" الذي يمثل الحق العام (بديل وكيل الجمهورية).</p>
+                </div>
+                <div class="info-box" style="border-color: #e74c3c;">
+                    <h3><i class="fas fa-map-marker-alt"></i> الاختصاص الإقليمي</h3>
+                    <p>يعقد الاختصاص للمحكمة التي يقع بدائرتها موطن المدعى عليه (أو مكان تنفيذ الأشغال/العقد في حالات خاصة).</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab2" class="tab-content">
+            <h2>المحاكم الإدارية للاستئناف</h2>
+            <p>تم استحداثها بموجب القانون 22/10 لتكريس مبدأ التقاضي على درجتين في المادة الإدارية. تختص بالنظر في استئناف أحكام المحاكم الإدارية.</p>
+
+            <div class="special-role">
+                <h3><i class="fas fa-star"></i> اختصاص استثنائي (الجزائر العاصمة)</h3>
+                <p>محكمة الاستئناف الإدارية بالجزائر العاصمة تفصل <strong>كدرجة أولى</strong> في دعاوى إلغاء القرارات الصادرة عن السلطات المركزية (الوزارات) والهيئات الوطنية.</p>
+            </div>
+
+            <h3 style="margin-top: 30px; font-size: 1rem; color: #aaa;">عددها 6 محاكم جهوية فقط:</h3>
+            <ul class="courts-list">
+                <li><i class="fas fa-check-circle"></i> الجزائر</li>
+                <li><i class="fas fa-check-circle"></i> وهران</li>
+                <li><i class="fas fa-check-circle"></i> قسنطينة</li>
+                <li><i class="fas fa-check-circle"></i> ورقلة</li>
+                <li><i class="fas fa-check-circle"></i> بشار</li>
+                <li><i class="fas fa-check-circle"></i> تامنغست</li>
+            </ul>
+        </div>
+
+        <div id="tab3" class="tab-content">
+            <h2>مجلس الدولة (قمة الهرم)</h2>
+            <p>الهيئة العليا المقومة لأعمال الجهات القضائية الإدارية، يضمن توحيد الاجتهاد القضائي.</p>
+
+            <div class="info-grid">
+                <div class="info-box" style="border-color: var(--primary-gold);">
+                    <h3><i class="fas fa-gavel"></i> الدور القضائي</h3>
+                    <p>يفصل في الطعون بالنقض (ضد أحكام المحاكم الإدارية للاستئناف)، ويفصل كمرجع استئناف لقرارات محكمة استئناف الجزائر (في القضايا المركزية).</p>
+                </div>
+                <div class="info-box" style="border-color: #3498db;">
+                    <h3><i class="fas fa-file-contract"></i> الدور الاستشاري</h3>
+                    <p>يبدي رأيه وجوباً في مشاريع القوانين التي تخطره بها الحكومة قبل عرضها على البرلمان.</p>
+                </div>
+            </div>
+
+            <div class="special-role" style="background: rgba(52, 152, 219, 0.1); border-color: #3498db;">
+                <strong><i class="fas fa-sitemap"></i> الغرف الخمس:</strong>
+                صفقات عمومية - وظيفة عمومية - تعمير ومسؤولية - عقار ونزع ملكية - استعجالي وأحزاب.
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            // إخفاء كل المحتويات
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+
+            // إزالة التفعيل من الأزرار
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+
+            // إظهار التبويب المطلوب وتفعيل الزر
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
+
+</body>
+</html>
