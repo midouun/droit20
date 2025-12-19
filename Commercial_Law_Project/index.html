@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المنصة الذكية | القانون التجاري الجزائري</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-overlay"></div>
+        <div class="header-content wrapper">
+            <span class="badge-pill">السداسي الثالث 2025/2026</span>
+            <h1 class="hero-title">موسوعة القانون التجاري</h1>
+            <p class="hero-subtitle">نظام مراجعة شامل: الأعمال التجارية، التاجر، الشركات، والمنازعات التجارية</p>
+            
+            <div id="countdown" class="countdown-grid">
+                </div>
+            <p style="margin-top: 15px; font-size: 0.9rem; opacity: 0.8;">موعد الامتحان: 17 ديسمبر 2025 - 20:00 مساءً</p>
+        </div>
+    </header>
+
+    <nav class="sticky-nav">
+        <div class="nav-container wrapper">
+            <button class="nav-btn active" data-target="review">
+                <span class="icon">💼</span> بنك الأسئلة
+            </button>
+            <button class="nav-btn" data-target="dictionary">
+                <span class="icon">📖</span> المصطلحات
+            </button>
+            <button class="nav-btn" data-target="exam">
+                <span class="icon">📝</span> الامتحان التجريبي
+            </button>
+            <button class="nav-btn" data-target="stats">
+                <span class="icon">📊</span> إحصائياتي
+            </button>
+        </div>
+    </nav>
+
+    <main class="wrapper">
+        
+        <section id="view-review" class="view-section active">
+            <div class="toolbar">
+                <div class="search-box">
+                    <input type="text" id="reviewSearch" placeholder="ابحث عن: السجل التجاري، الإفلاس، المحكمة التجارية...">
+                    <span class="search-icon">🔍</span>
+                </div>
+                <div class="filters">
+                    <button class="filter-tag active" data-cat="all">الكل</button>
+                    <button class="filter-tag" data-cat="acts">الأعمال التجارية</button>
+                    <button class="filter-tag" data-cat="merchant">التاجر والسجل</button>
+                    <button class="filter-tag" data-cat="courts">المنازعات والإثبات</button>
+                    <button class="filter-tag" data-cat="lease">الإيجار التجاري</button>
+                </div>
+            </div>
+            <div id="questionsContainer" class="cards-grid">
+                </div>
+        </section>
+
+        <section id="view-dictionary" class="view-section">
+            <div class="toolbar">
+                <input type="text" id="dictSearch" class="search-input-lg" placeholder="ابحث عن مصطلح تجاري...">
+            </div>
+            <div id="dictionaryContainer" class="dict-grid">
+                </div>
+        </section>
+
+        <section id="view-exam" class="view-section">
+            <div id="exam-start" class="exam-card center-content">
+                <div class="icon-lg">⚖️</div>
+                <h2>تحدي القانون التجاري</h2>
+                <p>اختبار ذكي يغطي المحاور: الأعمال التجارية، التاجر، الإثبات، والمحاكم المتخصصة.</p>
+                <button id="btnStartExam" class="btn-primary-lg">بدء الاختبار (20 دقيقة)</button>
+            </div>
+
+            <div id="exam-active" class="exam-card hidden">
+                <div class="exam-header">
+                    <div class="progress-container">
+                        <div id="examProgress" class="progress-bar"></div>
+                    </div>
+                    <div class="exam-meta">
+                        <span id="qCounter">1 / 20</span>
+                        <span id="examTimer" class="timer">00:00</span>
+                    </div>
+                </div>
+                
+                <h3 id="examQuestion" class="question-text">...</h3>
+                
+                <div class="options-group">
+                    <button class="option-btn" onclick="ExamEngine.answer(true)">✅ صحيح</button>
+                    <button class="option-btn" onclick="ExamEngine.answer(false)">❌ خطأ</button>
+                </div>
+
+                <div id="examFeedback" class="feedback-box hidden"></div>
+                <button id="btnNextQ" class="btn-next hidden">السؤال التالي</button>
+            </div>
+
+            <div id="exam-result" class="exam-card center-content hidden">
+                <div class="score-wrapper">
+                    <svg viewBox="0 0 36 36" class="circular-chart">
+                        <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <path id="scoreCircle" class="circle" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <text x="18" y="20.35" class="percentage" id="scoreText">0%</text>
+                    </svg>
+                </div>
+                <h2 id="resultTitle">...</h2>
+                <div id="detailedStats" class="stats-breakdown"></div>
+                <button onclick="location.reload()" class="btn-primary-lg">محاولة جديدة</button>
+            </div>
+        </section>
+
+        <section id="view-stats" class="view-section">
+            <div class="stats-dashboard">
+                <div class="stat-widget">
+                    <span class="stat-num" id="totalAttempts">0</span>
+                    <span class="stat-lbl">عدد الاختبارات</span>
+                </div>
+                <div class="stat-widget">
+                    <span class="stat-num" id="bestScore">0%</span>
+                    <span class="stat-lbl">أعلى معدل</span>
+                </div>
+                <div class="stat-widget">
+                    <span class="stat-num" id="avgScore">0%</span>
+                    <span class="stat-lbl">المستوى العام</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>المنصة الذكية - مقياس القانون التجاري © 2026</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
