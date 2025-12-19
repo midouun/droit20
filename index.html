@@ -3,180 +3,434 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>التنظيم القضائي الجزائري | محاضرات 2025</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <title>مراجعة القانون المدني - مصادر الالتزام</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a8a; /* أزرق داكن */
+            --secondary: #d97706; /* ذهبي */
+            --bg: #f3f4f6;
+            --text: #1f2937;
+            --white: #ffffff;
+            --success: #10b981;
+            --error: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding-bottom: 50px;
+        }
+
+        /* تنسيق الهيدر والعداد */
+        header {
+            background: linear-gradient(135deg, var(--primary), #1e40af);
+            color: var(--white);
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 900;
+        }
+
+        .subtitle {
+            margin-top: 10px;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        /* تنسيق العداد */
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .time-box {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            padding: 15px;
+            border-radius: 12px;
+            min-width: 90px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .time-val {
+            display: block;
+            font-size: 2rem;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .time-label {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        /* تنسيق الأقسام */
+        .container {
+            max-width: 900px;
+            margin: -30px auto 0;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .section-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            border-top: 5px solid var(--secondary);
+        }
+
+        .section-title {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 10px;
+        }
+
+        /* تنسيق الأسئلة */
+        .question-item {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .question-header {
+            background: #f9fafb;
+            padding: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+        }
+
+        .question-header:hover {
+            background: #f3f4f6;
+        }
+
+        .arrow {
+            transition: transform 0.3s;
+        }
+
+        .question-item.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        .answer-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: var(--white);
+            padding: 0 15px;
+        }
+
+        .question-item.active .answer-content {
+            padding: 15px;
+            border-top: 1px solid #e5e7eb;
+            max-height: 500px; /* قيمة تقريبية للسماح بالتمدد */
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .tag-tf { background: #e0f2fe; color: #0369a1; } /* صح وخطأ */
+        .tag-direct { background: #fef3c7; color: #92400e; } /* مباشر */
+
+        .answer-text {
+            line-height: 1.8;
+            color: #4b5563;
+        }
+
+        .highlight-law {
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .source-ref {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: #9ca3af;
+            font-style: italic;
+        }
+
+        /* زر طباعة أو تحميل */
+        .action-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+        .action-btn:hover { background: #1e40af; }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            .time-box { min-width: 70px; padding: 10px; }
+            .time-val { font-size: 1.5rem; }
+        }
+    </style>
 </head>
 <body>
 
     <header>
-        <div class="container">
-            <h1>التنظيم القضائي الجزائري</h1>
-            <p>دليل مبسط وشامل لطلبة الحقوق - السنة الأولى</p>
+        <h1>راجع قبل الامتحان</h1>
+        <div class="subtitle">مقياس القانون المدني (مصادر الالتزام) | 2025-2026</div>
+        
+        <div class="countdown-container">
+            <div class="time-box">
+                <span class="time-val" id="days">00</span>
+                <span class="time-label">يوم</span>
+            </div>
+            <div class="time-box">
+                <span class="time-val" id="hours">00</span>
+                <span class="time-label">ساعة</span>
+            </div>
+            <div class="time-box">
+                <span class="time-val" id="minutes">00</span>
+                <span class="time-label">دقيقة</span>
+            </div>
+            <div class="time-box">
+                <span class="time-val" id="seconds">00</span>
+                <span class="time-label">ثانية</span>
+            </div>
         </div>
+        <div style="margin-top:15px; font-size:0.9rem;">موعد الامتحان: 11 جانفي 2026 - 10:00 صباحاً</div>
     </header>
 
-    <div class="main-content container">
-        
-        <aside class="sidebar">
-            <h3>فهرس المحاور</h3>
-            <ul>
-                <li><a href="#intro">1. مقدمة ومبادئ عامة</a></li>
-                <li><a href="#ordinary">2. النظام القضائي العادي</a></li>
-                <li><a href="#administrative">3. النظام القضائي الإداري</a></li>
-                <li><a href="#conflict">4. محكمة التنازع</a></li>
-                <li><a href="#judges">5. القضاة وأعوانهم</a></li>
-            </ul>
-        </aside>
+    <div class="container">
 
-        <section class="content">
-            
-            <article id="intro">
-                <h2>المحور الأول: مقدمة ومبادئ التنظيم القضائي</h2>
-                <div class="definition">
-                    <strong>تعريف التنظيم القضائي:</strong>
-                    هو مجموعة القواعد القانونية التي تبين أنواع المحاكم، وتشكيلها، واختصاصاتها، وكيفية ممارسة حق التقاضي أمامها.
+        <div class="section-card">
+            <div class="section-title">
+                <span>⚖️</span> أسئلة صح أم خطأ مع التعليل
+            </div>
+            <p style="margin-bottom: 20px; color: #666;">اضغط على السؤال لعرض الإجابة والتعليل من المحاضرات.</p>
+
+            <div class="question-item">
+                <div class="question-header">
+                    <span>1. السكوت يعتبر دائماً قبولاً لأنه تعبير ضمني عن الإرادة.</span>
+                    <span class="arrow">▼</span>
                 </div>
-                <p>يقوم التنظيم القضائي على مبادئ أساسية لضمان العدالة:</p>
-                <ul>
-                    <li><strong>حق اللجوء إلى القضاء:</strong> حق دستوري مكفول للجميع.</li>
-                    <li><strong>المساواة أمام القضاء:</strong> خضوع الجميع لنفس المحاكم دون تمييز.</li>
-                    <li><strong>التقاضي على درجتين:</strong> إمكانية استئناف الأحكام لتصحيح الأخطاء.</li>
-                    <li><strong>علانية الجلسات:</strong> الأصل العلانية لضمان الشفافية، والاستثناء السرية (مثل قضايا الأسرة).</li>
-                </ul>
-            </article>
+                <div class="answer-content">
+                    <p class="answer-text">
+                        <span style="color:var(--error); font-weight:bold;">خطأ.</span><br>
+                        التعليل: الأصل أن السكوت موقف سلبي لا يعتبر قبولاً. ولكن استثناءً يعتبر قبولاً في حالات محددة (السكوت الملابس) نصت عليها المادة 68 ق.م، وهي: 
+                        إذا كان هناك تعامل سابق، إذا كانت طبيعة المعاملة أو العرف التجاري يقضي بذلك، أو إذا كان الإيجاب لمصلحة من وجه إليه خالصاً.
+                        <span class="source-ref">[المصدر: صفحة 4 - المادة 68 ق.م]</span>
+                    </p>
+                </div>
+            </div>
 
-            <hr>
+            <div class="question-item">
+                <div class="question-header">
+                    <span>2. يسقط الإيجاب بوفاة الموجب حتى لو علم به القابل وقبله.</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p class="answer-text">
+                        <span style="color:var(--error); font-weight:bold;">خطأ (جزئي).</span><br>
+                        التعليل: يسقط الإيجاب إذا توفي الموجب أو فقد أهليته <span class="highlight-law">قبل</span> أن يتصل إيجابه بعلم القابل (المادة 62 ق.م). أما إذا اتصل بعلمه وتم القبول، ينعقد العقد.
+                        <span class="source-ref">[المصدر: صفحة 2 - المادة 62 ق.م]</span>
+                    </p>
+                </div>
+            </div>
 
-            <article id="ordinary">
-                <h2>المحور الثاني: هياكل النظام القضائي العادي</h2>
-                <p>يمثل الهيكل الأساسي للعدالة، ويتدرج من القاعدة إلى القمة وفق مبدأ التقاضي على درجتين.</p>
+            <div class="question-item">
+                <div class="question-header">
+                    <span>3. يجوز التعامل في تركة إنسان على قيد الحياة إذا وافق على ذلك.</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p class="answer-text">
+                        <span style="color:var(--error); font-weight:bold;">خطأ.</span><br>
+                        التعليل: كأصل عام يجوز التعامل في الأشياء المستقبلية، ولكن استثناءً <span class="highlight-law">لا يجوز التعامل في تركة إنسان على قيد الحياة ولو برضاه</span>، وذلك استناداً لنص المادة 92 ق.م.
+                        <span class="source-ref">[المصدر: صفحة 14 - المادة 92 ق.م]</span>
+                    </p>
+                </div>
+            </div>
 
-                <section>
-                    <h3>أولاً: المحاكم (الدرجة الأولى)</h3>
-                    <div class="definition">
-                        <strong>تعريف المحكمة:</strong>
-                        هي الجهة القضائية ذات الاختصاص العام، تفصل في جميع القضايا المعروضة عليها بأحكام قابلة للاستئناف.
-                    </div>
-                    <p>أهم الأقسام:</p>
-                    <ul>
-                        <li><strong>القسم المدني:</strong> للنزاعات المدنية والعقارية.</li>
-                        <li><strong>قسم شؤون الأسرة:</strong> للطلاق والميراث.</li>
-                        <li><strong>القسم الاجتماعي:</strong> لنزاعات العمل.</li>
-                        <li><strong>القسم الجزائي:</strong> للجنح والمخالفات.</li>
-                    </ul>
-                </section>
+            <div class="question-item">
+                <div class="question-header">
+                    <span>4. الإكراه المادي يعدم الإرادة، بينما الإكراه المعنوي يعيبها.</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p class="answer-text">
+                        <span style="color:var(--success); font-weight:bold;">صحيح.</span><br>
+                        التعليل: الإكراه المادي (الحسي) يقع على الجسم والمال فيضطر المتعاقد للقبول وتكون إرادته معدومة، أما الإكراه المعنوي (النفسي) فيبعث رهبة في النفس تدفع للتعاقد مما يجعل الإرادة موجودة ولكن معيبة (قابلة للإبطال).
+                        <span class="source-ref">[المصدر: صفحة 12 - أنواع الإكراه]</span>
+                    </p>
+                </div>
+            </div>
 
-                <section>
-                    <h3>ثانياً: المجالس القضائية (الاستئناف)</h3>
-                    <p>تختص بالفصل في استئناف الأحكام الصادرة عن المحاكم، وتضم غرفة الاتهام كجهة تحقيق عليا.</p>
-                </section>
+             <div class="question-item">
+                <div class="question-header">
+                    <span>5. يمكن للمتبوع التخلص من المسؤولية عن أعمال تابعه إذا أثبت أنه لم يرتكب خطأ في اختياره.</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p class="answer-text">
+                        <span style="color:var(--error); font-weight:bold;">خطأ.</span><br>
+                        التعليل: مسؤولية المتبوع لا تقوم على خطأ مفترض، بل هي مسؤولية بحكم القانون (تبعية). ولا يمكن للمتبوع دفعها إلا بنفي السببية (السبب الأجنبي). علاقة التبعية تقوم ولو لم يكن المتبوع حراً في اختيار تابعه.
+                        <span class="source-ref">[المصدر: صفحة 38، 39 - المادة 136 ق.م]</span>
+                    </p>
+                </div>
+            </div>
+        </div>
 
-                <section>
-                    <h3>ثالثاً: المحكمة العليا (قمة الهرم)</h3>
-                    <div class="definition">
-                        <strong>تنويه هام:</strong>
-                        المحكمة العليا "محكمة قانون" وليست درجة ثالثة للتقاضي. مهمتها توحيد الاجتهاد القضائي ومراقبة تطبيق القانون.
-                    </div>
-                </section>
-            </article>
+        <div class="section-card">
+            <div class="section-title">
+                <span>📝</span> أسئلة مقالية ومباشرة
+            </div>
 
-            <hr>
+            <div class="question-item">
+                <div class="question-header">
+                    <span>س1: ما هي شروط تطبيق نظرية "الظروف الطارئة"؟</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p class="answer-text">
+                        وفقاً للمادة 107/3 ق.م، تتطلب الشروط التالية:<br>
+                        <strong>1. شروط متعلقة بالعقد:</strong> أن يكون متراخي التنفيذ (مستمر أو مؤجل)، ومحدداً (ليس عقد غرر)، وأن يكون العقد قائماً.<br>
+                        <strong>2. شروط متعلقة بالحادث:</strong> أن يكون استثنائياً (نادر الوقوع)، عاماً (يعم الناس)، وغير متوقع الحدوث وقت التعاقد.<br>
+                        <strong>3. شروط متعلقة بالالتزام:</strong> أن يصبح التنفيذ <span class="highlight-law">مرهقاً</span> للمدين (يهدده بخسارة فادحة) وليس مستحيلاً.
+                        <span class="source-ref">[المصدر: صفحة 23]</span>
+                    </p>
+                </div>
+            </div>
 
-            <article id="administrative">
-                <h2>المحور الثالث: هياكل النظام القضائي الإداري</h2>
-                <p>نظام مستقل يفصل في المنازعات التي تكون الدولة أو الإدارة طرفاً فيها.</p>
+            <div class="question-item">
+                <div class="question-header">
+                    <span>س2: قارن بين البطلان المطلق والبطلان النسبي من حيث "الإجازة" و "التقادم".</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p class="answer-text">
+                        <strong>1. البطلان المطلق:</strong><br>
+                        - <u>الإجازة:</u> لا ترد عليه الإجازة لأنه عقد معدوم.<br>
+                        - <u>التقادم:</u> دعوى البطلان تسقط بمرور 15 سنة، والدفع بالبطلان لا يسقط أبداً.<br><br>
+                        <strong>2. البطلان النسبي (القابلية للإبطال):</strong><br>
+                        - <u>الإجازة:</u> يجوز إجازته من المتعاقد الذي تقرر الإبطال لمصلحته، ويصبح صحيحاً بأثر رجعي.<br>
+                        - <u>التقادم:</u> يسقط حق التمسك بالإبطال بمرور 5 سنوات من زوال العيب (أو 10 سنوات من إبرام العقد كتقادم طويل).
+                        <span class="source-ref">[المصدر: صفحة 18، 19]</span>
+                    </p>
+                </div>
+            </div>
 
-                <section>
-                    <h3>أولاً: المحاكم الإدارية</h3>
-                    <div class="definition">
-                        <strong>المبدأ العام:</strong>
-                        صاحبة الولاية العامة في المنازعات الإدارية (الدرجة الأولى). تتميز بوجود "محافظ الدولة" ووجوبية "التشكيلة الجماعية" (3 قضاة).
-                    </div>
-                </section>
+            <div class="question-item">
+                <div class="question-header">
+                    <span>س3: متى يعتبر "الاستعمال التعسفي للحق" صورة من صور الخطأ التقصيري؟</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p class="answer-text">
+                        حسب المادة 124 مكرر ق.م، يعتبر التعسف خطأ في الحالات التالية:<br>
+                        1. إذا وقع بقصد الإضرار بالغير.<br>
+                        2. إذا كان يرمي للحصول على فائدة قليلة جداً مقارنة بالضرر الجسيم الذي يلحق بالغير.<br>
+                        3. إذا كان الغرض منه الحصول على فائدة غير مشروعة.
+                        <span class="source-ref">[المصدر: صفحة 31]</span>
+                    </p>
+                </div>
+            </div>
 
-                <section>
-                    <h3>ثانياً: المحاكم الإدارية للاستئناف</h3>
-                    <p>تفصل في استئناف أحكام المحاكم الإدارية.</p>
-                    <div class="definition">
-                        <strong>⚠️ استثناء (سؤال امتحان):</strong>
-                        المحكمة الإدارية للاستئناف بالجزائر العاصمة تفصل "كدرجة أولى" في دعاوى إلغاء القرارات المركزية (الوزارات).
-                    </div>
-                </section>
+            <div class="question-item">
+                <div class="question-header">
+                    <span>س4: ما الفرق بين "الفسخ القضائي" و "الانفساخ"؟</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p class="answer-text">
+                        <strong>الفسخ القضائي:</strong> يقع بحكم القضاء نتيجة إخلال أحد المتعاقدين بالتزامه، ويشترط الإعذار، وللقاضي سلطة تقديرية.<br>
+                        <strong>الانفساخ (الفسخ القانوني):</strong> يقع بقوة القانون لاستحالة التنفيذ لسبب أجنبي (قوة قاهرة)، وينقضي الالتزام دون حاجة لحكم قضائي أو إعذار، ولا تعويض فيه.
+                        <span class="source-ref">[المصدر: صفحة 24، 26]</span>
+                    </p>
+                </div>
+            </div>
+        </div>
 
-                <section>
-                    <h3>ثالثاً: مجلس الدولة</h3>
-                    <p>قمة الهرم الإداري، ويتميز بازدواجية الوظيفة:</p>
-                    <ul>
-                        <li><strong>وظيفة قضائية:</strong> محكمة نقض في المواد الإدارية.</li>
-                        <li><strong>وظيفة استشارية:</strong> إبداء الرأي في مشاريع القوانين الحكومية.</li>
-                    </ul>
-                </section>
-            </article>
+        <div style="text-align: center; margin-top: 30px; color: #6b7280;">
+            <p>تذكر: العقد شريعة المتعاقدين (المادة 106 ق.م)</p>
+            <p>بالتوفيق في الامتحان!</p>
+        </div>
 
-            <hr>
-
-            <article id="conflict">
-                <h2>المحور الرابع: محكمة التنازع</h2>
-                <p>هيئة دستورية تفصل في تنازع الاختصاص بين القضاء العادي والقضاء الإداري.</p>
-
-                <section>
-                    <h3>أولاً: التشكيلة (المناصفة)</h3>
-                    <ul>
-                        <li><strong>الرئاسة:</strong> بالتناوب بين قضاة المحكمة العليا ومجلس الدولة.</li>
-                        <li><strong>الأعضاء:</strong> 7 قضاة (3 عادي + 3 إداري + الرئيس).</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h3>ثانياً: صور التنازع</h3>
-                    <div class="definition">
-                        <strong>1. التنازع الإيجابي:</strong> تمسك الجهتين بالاختصاص.
-                    </div>
-                    <div class="definition">
-                        <strong>2. التنازع السلبي:</strong> إعلان الجهتين عدم الاختصاص.
-                    </div>
-                    <div class="definition">
-                        <strong>3. تناقض الأحكام:</strong> صدور حكمين نهائيين متناقضين في نفس الموضوع.
-                    </div>
-                </section>
-            </article>
-
-            <hr>
-
-            <article id="judges">
-                <h2>المحور الخامس: القضاة وأعوانهم</h2>
-                
-                <section>
-                    <h3>أولاً: القضاة</h3>
-                    <p>هم المكلفون بالفصل في النزاعات، يتمتعون بالاستقلالية ويلتزمون بواجب التحفظ.</p>
-                </section>
-
-                <section>
-                    <h3>ثانياً: المهن الحرة (مساعدو العدالة)</h3>
-                    <ul>
-                        <li><strong>المحامي:</strong> للدفاع وتمثيل الأطراف.</li>
-                        <li><strong>الموثق:</strong> يحرر العقود الرسمية ويحفظها.</li>
-                        <li><strong>المحضر القضائي:</strong> يبلغ الأحكام وينفذها.</li>
-                        <li><strong>المترجم الرسمي:</strong> يترجم الوثائق والجلسات.</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h3>ثالثاً: المساعدون التقنيون</h3>
-                    <ul>
-                        <li><strong>الخبير القضائي:</strong> فني يستعين به القاضي في المسائل التقنية.</li>
-                        <li><strong>أمين الضبط:</strong> موظف عمومي، وحضوره إلزامي لصحة الجلسات.</li>
-                    </ul>
-                </section>
-            </article>
-
-        </section>
     </div>
 
-    <footer>
-        <p>جميع الحقوق محفوظة © 2025 - دروس التنظيم القضائي</p>
-    </footer>
+    <script>
+        // إعداد العداد التنازلي
+        const examDate = new Date('2026-01-11T10:00:00').getTime();
 
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = examDate - now;
+
+            if (distance < 0) {
+                clearInterval(timer);
+                document.querySelector('.countdown-container').innerHTML = "<div style='color:white; font-weight:bold; font-size:1.5rem;'>حان موعد الامتحان!</div>";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+        }, 1000);
+
+        // تفعيل الأكورديون (إظهار وإخفاء الإجابات)
+        document.querySelectorAll('.question-header').forEach(item => {
+            item.addEventListener('click', event => {
+                const parent = item.parentElement;
+                parent.classList.toggle('active');
+                
+                const content = parent.querySelector('.answer-content');
+                if (parent.classList.contains('active')) {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                } else {
+                    content.style.maxHeight = "0";
+                }
+            });
+        });
+    </script>
 </body>
 </html>
