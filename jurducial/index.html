@@ -3,51 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اختبار التنظيم القضائي الجزائري</title>
+    <title>نظام تقييم التنظيم القضائي v1.2</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>اختبار معلومات التنظيم القضائي</h1>
-            <p>سنة أولى حقوق - المقياس: التنظيم القضائي</p>
-        </header>
+    <div class="main-wrapper">
+        <div class="card" role="main">
+            <header>
+                <div class="icon" aria-hidden="true">⚖️</div>
+                <h1>نظام تقييم التنظيم القضائي</h1>
+                <p>سنة أولى حقوق | الإصدار 1.2</p>
+            </header>
 
-        <div id="quiz-container">
-            <div class="progress-bar">
-                <div class="progress" id="progress"></div>
-            </div>
-            
-            <div class="question-box">
-                <h2 id="question-text">نص السؤال يظهر هنا...</h2>
+            <div id="loading-screen" class="loading-spinner hidden">
+                جاري جلب البيانات القانونية...
             </div>
 
-            <div class="options">
-                <button class="btn btn-true" onclick="selectAnswer(true)">صح</button>
-                <button class="btn btn-false" onclick="selectAnswer(false)">خطأ</button>
+            <div id="quiz-screen" class="hidden">
+                <div class="stats-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                    <span id="question-count">جاري التحميل...</span>
+                    <div class="progress-track">
+                        <div class="progress-fill" id="progress-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="question-container" aria-live="polite">
+                    <h2 id="question-text">...</h2>
+                </div>
+
+                <div class="answers-container" id="options-container">
+                    <button class="btn btn-answer" id="btn-true" onclick="handleAnswer(true)">
+                        <span class="btn-icon">✅</span> صح <span class="key-hint">(→)</span>
+                    </button>
+                    <button class="btn btn-answer" id="btn-false" onclick="handleAnswer(false)">
+                        <span class="btn-icon">❌</span> خطأ <span class="key-hint">(←)</span>
+                    </button>
+                </div>
+
+                <div id="feedback-area" class="feedback hidden" aria-live="polite">
+                    <h3 id="feedback-title"></h3>
+                    <p id="feedback-text"></p>
+                    <div class="citation" id="feedback-source"></div>
+                    <button class="btn btn-next" id="btn-next" onclick="nextQuestion()">
+                        السؤال التالي <span class="key-hint">(Enter / Space)</span>
+                    </button>
+                </div>
             </div>
 
-            <div id="feedback" class="feedback hide">
-                <h3 id="feedback-title"></h3>
-                <p id="feedback-text"></p>
-                <button class="btn btn-next" onclick="nextQuestion()">السؤال التالي</button>
+            <div id="result-screen" class="hidden" aria-live="polite">
+                <div class="result-icon" id="result-emoji">📊</div>
+                <h2>تقرير التقييم النهائي</h2>
+                <div class="score-box">
+                    <span id="final-score">0</span>%
+                </div>
+                <p id="result-message" class="result-msg"></p>
+                <button class="btn btn-restart" onclick="restartQuiz()">إعادة التقييم ↺</button>
             </div>
-        </div>
-
-        <div id="result-container" class="hide">
-            <h2>انتهى الاختبار!</h2>
-            <p>نتيجتك هي:</p>
-            <div class="score-circle">
-                <span id="score">0</span> / <span id="total-questions">0</span>
-            </div>
-            <p id="result-message"></p>
-            <button class="btn btn-restart" onclick="restartQuiz()">إعادة الاختبار</button>
         </div>
     </div>
 
     <footer>
-        [cite_start]<p>تم إعداد الأسئلة بناءً على مطبوعة الأستاذة المشرفة هاشمي ف [cite: 2]</p>
+        <p>مرجع: مطبوعة الأستاذة المشرفة هاشمي ف (2024-2025) | القانون العضوي 22/10</p>
     </footer>
 
     <script src="script.js"></script>
