@@ -3,240 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المنصة الذكية: مصادر الالتزام</title>
+    <title>المنصة الذكية: القانون المدني v3.0</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #1e293b;
-            --accent: #d97706;
-            --bg: #f1f5f9;
+            --primary: #0f172a;
+            --accent: #ca8a04;
+            --bg: #f8fafc;
             --white: #ffffff;
             --text: #334155;
-            --success: #10b981;
-            --error: #ef4444;
-            --border: #cbd5e1;
+            --success: #15803d;
+            --error: #b91c1c;
+            --border: #e2e8f0;
         }
 
         * { box-sizing: border-box; font-family: 'Cairo', sans-serif; }
         body { margin: 0; background-color: var(--bg); color: var(--text); padding-bottom: 80px; }
 
-        /* --- Header & Countdown --- */
+        /* Header */
         header {
-            background: linear-gradient(135deg, var(--primary), #0f172a);
+            background: linear-gradient(135deg, var(--primary), #334155);
             color: var(--white);
-            padding: 30px 20px 60px;
+            padding: 30px 20px 70px;
             text-align: center;
             border-bottom-left-radius: 40px;
             border-bottom-right-radius: 40px;
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2);
-            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
         }
 
-        .app-title { font-size: 2rem; font-weight: 900; margin: 0; color: var(--accent); }
-        .app-subtitle { font-size: 1rem; opacity: 0.9; margin-top: 5px; }
+        .app-title { font-size: 2.2rem; font-weight: 900; margin: 0; color: var(--accent); }
+        .countdown-box { display: flex; justify-content: center; gap: 10px; margin-top: 20px; }
+        .time-unit { background: rgba(255,255,255,0.15); padding: 8px 15px; border-radius: 12px; min-width: 70px; backdrop-filter: blur(5px); }
+        .time-val { font-size: 1.4rem; font-weight: 700; display: block; }
+        .time-lbl { font-size: 0.75rem; opacity: 0.9; }
 
-        .countdown-box {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .time-unit {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 10px;
-            border-radius: 12px;
-            min-width: 70px;
-            text-align: center;
-        }
-        .time-val { font-size: 1.5rem; font-weight: 700; display: block; }
-        .time-lbl { font-size: 0.75rem; opacity: 0.8; }
+        /* Layout */
+        .container { max-width: 900px; margin: -50px auto 0; padding: 0 20px; position: relative; z-index: 10; }
 
-        /* --- Main Layout --- */
-        .container {
-            max-width: 900px;
-            margin: -40px auto 0;
-            padding: 0 20px;
-            position: relative;
-            z-index: 10;
-        }
-
-        /* --- Controls --- */
-        .controls-card {
-            background: var(--white);
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .mode-switcher {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 1rem;
-        }
-
-        .btn-review { background: var(--bg); color: var(--text); border: 2px solid var(--border); }
-        .btn-review.active { background: var(--primary); color: var(--white); border-color: var(--primary); }
-
-        .btn-exam { background: var(--bg); color: var(--text); border: 2px solid var(--border); }
-        .btn-exam.active { background: var(--accent); color: var(--white); border-color: var(--accent); }
-
-        .search-input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            font-size: 1rem;
-            outline: none;
-        }
-        .search-input:focus { border-color: var(--accent); }
-
-        /* --- Questions List (Review Mode) --- */
-        .q-card {
-            background: var(--white);
-            border-radius: 16px;
-            margin-bottom: 15px;
-            border: 1px solid var(--border);
-            overflow: hidden;
-            transition: transform 0.2s;
-        }
-        .q-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-
-        .q-head {
-            padding: 18px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 700;
-        }
+        /* Cards */
+        .card { background: var(--white); border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 20px; border: 1px solid var(--border); overflow: hidden; }
         
-        .badge {
-            font-size: 0.75rem;
-            padding: 4px 8px;
-            border-radius: 6px;
-            margin-left: 8px;
-            background: #e2e8f0;
-            color: #475569;
-        }
+        /* Controls */
+        .controls { padding: 20px; display: flex; gap: 10px; }
+        .btn { flex: 1; padding: 12px; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; transition: 0.2s; font-size: 1rem; }
+        .btn-outline { background: transparent; border: 2px solid var(--border); color: var(--text); }
+        .btn-outline.active { background: var(--primary); color: var(--white); border-color: var(--primary); }
+        .btn-action { background: var(--accent); color: var(--white); }
+        .btn-action:hover { background: #b45309; }
 
-        .q-body {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            background: #f8fafc;
-            border-top: 1px solid var(--border);
-        }
-        .q-card.open .q-body { max-height: 1000px; }
-        .q-card.open .arrow { transform: rotate(180deg); }
-        .arrow { transition: transform 0.3s; }
+        /* Review Mode */
+        .search-box { width: 100%; padding: 15px; border: 2px solid var(--border); border-radius: 12px; font-size: 1rem; margin-bottom: 20px; }
+        .q-item { border-bottom: 1px solid var(--border); }
+        .q-head { padding: 15px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
+        .q-head:hover { background: #f1f5f9; }
+        .q-body { max-height: 0; overflow: hidden; transition: max-height 0.3s; background: #f8fafc; padding: 0 20px; color: #475569; }
+        .q-item.open .q-body { padding: 15px 20px; max-height: 500px; border-top: 1px solid var(--border); }
 
-        .answer-content { padding: 20px; line-height: 1.7; color: #475569; }
-        .ref-text { display: block; margin-top: 10px; font-size: 0.85rem; color: #94a3b8; font-style: italic; }
-
-        /* --- Exam Mode Styles --- */
-        .exam-interface { display: none; }
-        .exam-active .exam-interface { display: block; }
-        .exam-active .review-interface { display: none; }
-
-        .exam-stat-bar {
-            display: flex;
-            justify-content: space-between;
-            background: var(--white);
-            padding: 15px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            font-weight: bold;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .exam-question-card {
-            background: var(--white);
-            padding: 25px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            min-height: 300px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .exam-q-text { font-size: 1.3rem; margin-bottom: 30px; color: var(--primary); }
-
-        .exam-options { display: flex; gap: 15px; justify-content: center; }
+        /* Exam Mode */
+        .exam-area { display: none; text-align: center; }
+        .exam-header { display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold; background: #e2e8f0; padding: 10px 20px; border-radius: 10px; }
+        .question-text { font-size: 1.3rem; margin: 30px 0; color: var(--primary); line-height: 1.6; }
         
-        .opt-btn {
-            padding: 15px 40px;
-            border-radius: 12px;
-            border: 2px solid var(--border);
-            background: white;
-            font-size: 1.1rem;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.2s;
-        }
+        .options-grid { display: flex; gap: 15px; justify-content: center; margin-bottom: 20px; }
+        .opt-btn { padding: 15px 40px; border-radius: 12px; border: 2px solid var(--border); background: white; font-size: 1.1rem; cursor: pointer; font-weight: bold; }
         .opt-btn:hover { background: #f1f5f9; }
+        .opt-btn.correct { background: #dcfce7; border-color: var(--success); color: var(--success); }
+        .opt-btn.wrong { background: #fee2e2; border-color: var(--error); color: var(--error); }
+
+        .feedback { display: none; padding: 15px; border-radius: 10px; margin-top: 15px; text-align: right; }
+        .feedback.success { background: #dcfce7; color: #14532d; }
+        .feedback.error { background: #fee2e2; color: #7f1d1d; }
+
+        /* Results & Analytics */
+        .result-box { display: none; text-align: center; padding: 40px 20px; }
+        .score-circle { width: 120px; height: 120px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 900; margin: 0 auto 20px; }
         
-        .opt-true { border-color: var(--success); color: var(--success); }
-        .opt-false { border-color: var(--error); color: var(--error); }
+        .analytics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 30px; text-align: right; }
+        .stat-card { background: #f1f5f9; padding: 15px; border-radius: 10px; border-right: 4px solid var(--accent); }
+        .stat-label { font-size: 0.85rem; color: #64748b; }
+        .stat-val { font-weight: bold; font-size: 1.1rem; color: var(--primary); }
 
-        .feedback-area {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 10px;
-            display: none;
-        }
-        .feedback-correct { background: #dcfce7; color: #166534; }
-        .feedback-wrong { background: #fee2e2; color: #991b1b; }
-
-        .next-btn {
-            margin-top: 20px;
-            background: var(--primary);
-            color: white;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            display: none;
-            font-size: 1rem;
-        }
-
-        .result-screen {
-            text-align: center;
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            display: none;
-        }
-        .score-circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: var(--primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            font-weight: 900;
-            margin: 0 auto 20px;
-        }
+        /* Categories Tags */
+        .cat-tag { font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; background: #e2e8f0; color: #64748b; margin-left: 5px; }
 
     </style>
 </head>
@@ -244,68 +92,58 @@
 
     <header>
         <h1 class="app-title">المنصة الذكية: القانون المدني</h1>
-        <div class="app-subtitle">مراجعة شاملة + نظام اختبارات تفاعلي</div>
-        
-        <div class="countdown-box">
-            <div class="time-unit"><span class="time-val" id="d">00</span><span class="time-lbl">يوم</span></div>
-            <div class="time-unit"><span class="time-val" id="h">00</span><span class="time-lbl">ساعة</span></div>
-            <div class="time-unit"><span class="time-val" id="m">00</span><span class="time-lbl">دقيقة</span></div>
-        </div>
-        <div style="margin-top:15px; font-size:0.8rem;">موعد الامتحان: 11-01-2026</div>
+        <div class="countdown-box" id="countdown"></div>
+        <div style="margin-top:10px; font-size:0.9rem; opacity:0.8">موعد الامتحان: 11-01-2026</div>
     </header>
 
-    <div class="container" id="mainContainer">
+    <div class="container">
         
-        <div class="controls-card">
-            <div class="mode-switcher">
-                <button class="btn btn-review active" onclick="switchMode('review')">📚 وضع المراجعة</button>
-                <button class="btn btn-exam" onclick="switchMode('exam')">📝 امتحان تجريبي</button>
-            </div>
-            
-            <div class="review-interface">
-                <input type="text" class="search-input" id="searchBox" placeholder="ابحث عن: الغلط، القاصر، التقادم، المتبوع...">
-                <div style="margin-top:10px; font-size:0.9rem; color:#64748b;">
-                    عدد الأسئلة في قاعدة البيانات: <span id="dbCount" style="font-weight:bold;">0</span> سؤال
-                </div>
-            </div>
+        <div class="card controls">
+            <button class="btn btn-outline active" id="btnReview" onclick="setMode('review')">📖 المراجعة الشاملة</button>
+            <button class="btn btn-outline" id="btnExam" onclick="setMode('exam')">📝 امتحان ذكي</button>
         </div>
 
-        <div class="review-interface" id="questionsList">
-            </div>
+        <div id="reviewSection">
+            <input type="text" class="search-box" id="searchInput" placeholder="بحث في المفاهيم (الغلط، التدليس، المسؤولية)...">
+            <div class="card" id="questionsContainer">
+                </div>
+        </div>
 
-        <div class="exam-interface" id="examArea">
+        <div id="examSection" class="exam-area">
             
-            <div id="quizStart" style="text-align:center; padding: 40px; background:white; border-radius:20px;">
-                <h2>هل أنت مستعد للتحدي؟</h2>
-                <p>سيقوم النظام باختيار 20 سؤالاً عشوائياً من قاعدة البيانات.</p>
-                <button class="btn btn-exam active" style="margin-top:20px; padding:15px 40px;" onclick="startExam()">بدء الامتحان</button>
+            <div id="examStart" class="card" style="padding: 40px;">
+                <h2>جاهز للاختبار؟</h2>
+                <p style="color:#64748b; margin-bottom:20px;">النظام سيختار 15 سؤالاً عشوائياً ويحلل نقاط ضعفك.</p>
+                <button class="btn btn-action" onclick="examEngine.start()">بدء الامتحان الآن</button>
             </div>
 
-            <div id="quizActive" style="display:none;">
-                <div class="exam-stat-bar">
-                    <span id="qProgress">سؤال 1 / 20</span>
-                    <span id="examTimer" style="color:var(--error)">00:00</span>
-                    <span id="currentScore">النقاط: 0</span>
+            <div id="examActive" class="card" style="padding: 20px; display:none;">
+                <div class="exam-header">
+                    <span id="qProgress">1 / 15</span>
+                    <span id="timer" style="color:var(--error)">00:00</span>
+                </div>
+                
+                <div id="qCategory" style="text-align:right; font-size:0.8rem; color:#94a3b8;"></div>
+                <div class="question-text" id="qText">...</div>
+
+                <div class="options-grid" id="optionsBox">
+                    <button class="opt-btn" onclick="examEngine.answer(true)">✅ صحيح</button>
+                    <button class="opt-btn" onclick="examEngine.answer(false)">❌ خطأ</button>
                 </div>
 
-                <div class="exam-question-card">
-                    <div id="examQText" class="exam-q-text">السؤال يظهر هنا...</div>
-                    
-                    <div class="exam-options" id="optionsArea">
-                        <button class="opt-btn opt-true" onclick="checkAnswer(true)">✅ صح</button>
-                        <button class="opt-btn opt-false" onclick="checkAnswer(false)">❌ خطأ</button>
+                <div id="feedbackBox" class="feedback"></div>
+                <button id="nextBtn" class="btn btn-action" style="width:100%; display:none; margin-top:15px;" onclick="examEngine.next()">السؤال التالي</button>
+            </div>
+
+            <div id="examResult" class="card result-box">
+                <div class="score-circle" id="finalScore">0%</div>
+                <h2>نتائج التحليل</h2>
+                <p id="finalMsg" style="color:#64748b;"></p>
+                
+                <div class="analytics-grid" id="analyticsBox">
                     </div>
 
-                    <div id="feedback" class="feedback-area"></div>
-                    <button id="nextBtn" class="next-btn" onclick="nextQuestion()">السؤال التالي ⬅️</button>
-                </div>
-            </div>
-
-            <div id="quizResult" class="result-screen">
-                <div class="score-circle" id="finalScore">0%</div>
-                <h2>انتهى الامتحان!</h2>
-                <p id="resultMsg">رسالة النتيجة</p>
-                <button class="btn btn-review" onclick="location.reload()" style="margin-top:20px;">إعادة المحاولة</button>
+                <button class="btn btn-outline" style="margin-top:30px; width:100%;" onclick="location.reload()">إعادة المحاولة</button>
             </div>
 
         </div>
@@ -314,271 +152,344 @@
 
     <script>
         // ==========================================
-        // 1. قاعدة البيانات الشاملة (The Core)
+        // 1. DATA LAYER (Refactored & Structured)
         // ==========================================
-        // تم استخراج هذه البيانات بدقة من ملف PDF المرفق
-        const questionsDB = [
-            [cite_start]// --- المصادر والعقد --- [cite: 5, 7, 8]
-            { t: 'tf', q: 'مصادر الالتزام في القانون الجزائري محصورة في العقد والعمل المستحق للتعويض فقط.', a: 'خطأ. هي خمسة مصادر: العقد، الإرادة المنفردة، المسؤولية التقصيرية، الإثراء بلا سبب، والقانون (المواد 53-159).', ref: 'صفحة 1' },
-            { t: 'tf', q: 'العقد هو توافق إرادتين على إحداث أثر قانوني سواء كان هذا الأثر إنشاء التزام أو تعديله أو إنهائه.', a: 'صحيح. هذا هو تعريف العقد في القانون المدني.', ref: 'صفحة 1' },
-            
-            [cite_start]// --- التراضي والإيجاب --- [cite: 17, 22, 31, 62]
-            { t: 'tf', q: 'عرض البضائع مع بيان ثمنها يعتبر دعوة للتعاقد وليس إيجاباً.', a: 'خطأ. إذا تضمن العرض العناصر الجوهرية (الثمن والشيء) فهو إيجاب. الدعوة للتعاقد تكون عند خلو العرض من العناصر الجوهرية.', ref: 'صفحة 2' },
-            { t: 'tf', q: 'يسقط الإيجاب الملزم إذا انقضت المدة المحددة دون صدور قبول.', a: 'صحيح. يسقط أيضاً برفضه ممن وجه إليه.', ref: 'صفحة 2' },
-            { t: 'tf', q: 'إذا مات الموجب قبل أن يعلم القابل بالإيجاب، فإن الإيجاب يظل قائماً.', a: 'خطأ. يسقط الإيجاب بوفاة الموجب أو فقده لأهليته قبل اتصال الإيجاب بعلم القابل (المادة 62).', ref: 'صفحة 2' },
-            
-            [cite_start]// --- القبول والسكوت --- [cite: 55, 68, 70]
-            { t: 'tf', q: 'السكوت الملابس يعتبر قبولاً إذا كان هناك تعامل سابق بين المتعاقدين.', a: 'صحيح. المادة 68 تعتبر السكوت قبولاً في حالات استثنائية منها وجود تعامل سابق.', ref: 'صفحة 4' },
-            { t: 'tf', q: 'في عقود المزايدة، يعتبر افتتاح المزاد إيجاباً.', a: 'خطأ. افتتاح المزاد دعوة للتعاقد. الإيجاب هو تقديم العطاء، والقبول هو إرساء المزاد.', ref: 'صفحة 4' },
-            
-            [cite_start]// --- التعاقد بين غائبين والوعد --- [cite: 82, 95, 108]
-            { t: 'tf', q: 'يتم التعاقد بين غائبين في الزمان والمكان اللذين يصدر فيهما القبول.', a: 'خطأ. المشرع أخذ بنظرية "العلم بالقبول". يتم العقد متى علم الموجب بالقبول (المادة 67).', ref: 'صفحة 5' },
-            { t: 'tf', q: 'العربون في القانون الجزائري يفيد التأكيد على العقد ولا يجوز العدول عنه.', a: 'خطأ. المادة 72 مكرر اعتبرت العربون دليلاً على "خيار العدول" إلا إذا اتفق الطرفان على خلاف ذلك.', ref: 'صفحة 6' },
-            { t: 'tf', q: 'في الوعد بالبيع، إذا تصرف الواعد في الشيء لشخص آخر، يحق للموعود له إبطال التصرف.', a: 'خطأ. يرجع الموعود له بالتعويض فقط لأن حق الموعود له حق شخصي وليس عينياً.', ref: 'صفحة 6' },
+        const categories = {
+            consent: "التراضي والعقد",
+            vices: "عيوب الإرادة",
+            pillars: "المحل والسبب",
+            effects: "آثار العقد والفسخ",
+            tort: "المسؤولية التقصيرية"
+        };
 
-            [cite_start]// --- النيابة --- [cite: 130, 142]
-            { t: 'tf', q: 'إذا تعاقد النائب مع نفسه باسم الأصيل، يكون العقد باطلاً بطلاناً مطلقاً.', a: 'خطأ. يكون العقد موقوفاً على إجازة الأصيل (قابل للإبطال لمصلحة الأصيل)، إلا إذا رخص له أو نص القانون على ذلك.', ref: 'صفحة 8' },
-            { t: 'tf', q: 'إذا تجاوز النائب حدود وكالته، فإن التصرف لا ينصرف للأصيل إلا إذا أقره.', a: 'صحيح. (المادة 74).', ref: 'صفحة 7' },
+        const db = [
+            // --- Consent & Contract ---
+            { 
+                cat: 'consent', 
+                q: 'يسقط الإيجاب بوفاة الموجب حتى لو اتصل بعلم القابل.', 
+                isCorrect: false, 
+                expl: 'يسقط الإيجاب بوفاة الموجب فقط إذا حدثت الوفاة قبل اتصال الإيجاب بعلم القابل (المادة 62).', 
+                ref: 'صفحة 2' 
+            },
+            { 
+                cat: 'consent', 
+                q: 'السكوت يعتبر قبولاً إذا كانت طبيعة المعاملة أو العرف التجاري تدل على ذلك.', 
+                isCorrect: true, 
+                expl: 'نعم، هذا يسمى السكوت الملابس وهو استثناء من أصل أن السكوت لا ينسب لساكت قول (المادة 68).', 
+                ref: 'صفحة 4' 
+            },
+            { 
+                cat: 'consent', 
+                q: 'في الوعد بالتعاقد، إذا نكل الواعد، يجوز للموعود له استصدار حكم يقوم مقام العقد.', 
+                isCorrect: true, 
+                expl: 'المادة 72 تجيز ذلك إذا كانت الشروط اللازمة لإتمام العقد متوافرة.', 
+                ref: 'صفحة 6' 
+            },
 
-            [cite_start]// --- الأهلية --- [cite: 152, 156, 163]
-            { t: 'tf', q: 'تصرفات الصبي غير المميز (أقل من 13 سنة) قابلة للإبطال لمصلحته.', a: 'خطأ. تصرفات الصبي غير المميز باطلة بطلاناً مطلقاً (معدومة).', ref: 'صفحة 8' },
-            { t: 'tf', q: 'المجنون والمعتوه يأخذان حكم الصبي المميز.', a: 'خطأ. يأخذان حكم الصبي "غير المميز" (عديم الأهلية). أما السفيه وذو الغفلة فيأخذان حكم الصبي المميز.', ref: 'صفحة 9' },
-            { t: 'tf', q: 'يجوز تعيين مساعد قضائي للشخص المصاب بعاهة مزدوجة تعيقه عن التعبير عن إرادته.', a: 'صحيح. (المادة 80).', ref: 'صفحة 9' },
+            // --- Vices of Consent ---
+            { 
+                cat: 'vices', 
+                q: 'الغلط في القانون لا يعيب الإرادة ولا يجيز إبطال العقد.', 
+                isCorrect: false, 
+                expl: 'الغلط في القانون يعيب الإرادة ويجيز الإبطال إذا توافرت فيه شروط الغلط في الواقع (المادة 83).', 
+                ref: 'صفحة 10' 
+            },
+            { 
+                cat: 'vices', 
+                q: 'تسقط دعوى الإبطال بسبب الاستغلال بمرور 15 سنة.', 
+                isCorrect: false, 
+                expl: 'الاستغلال له تقادم خاص قصير وهو سنة واحدة من تاريخ إبرام العقد (المادة 90).', 
+                ref: 'صفحة 20' 
+            },
+            { 
+                cat: 'vices', 
+                q: 'الإكراه المادي يعدم الإرادة، بينما الإكراه المعنوي يعيبها.', 
+                isCorrect: true, 
+                expl: 'الإكراه المادي (كإمساك اليد للتوقيع) يجعل العقد باطلاً بطلاناً مطلقاً لانعدام الرضا.', 
+                ref: 'صفحة 12' 
+            },
 
-            [cite_start]// --- عيوب الإرادة --- [cite: 171, 197, 212, 232]
-            { t: 'tf', q: 'الغلط في القانون لا يعيب الإرادة ولا يمكن طلب الإبطال بسببه.', a: 'خطأ. الغلط في القانون يعيب الإرادة إذا توافرت فيه شروط الغلط في الواقع (المادة 83).', ref: 'صفحة 10' },
-            { t: 'tf', q: 'الإكراه المادي يعدم الإرادة ويجعل العقد باطلاً، بينما الإكراه المعنوي يجعل العقد قابلاً للإبطال.', a: 'صحيح. الإكراه المعنوي يفسد الرضا ولا يعدمه.', ref: 'صفحة 12' },
-            { t: 'tf', q: 'الكتمان المتعمد لواقعة جوهرية يعتبر تدليساً.', a: 'صحيح. السكوت عمداً عن واقعة لو علم بها المتعاقد لما أبرم العقد يعد تدليساً (المادة 86).', ref: 'صفحة 11' },
-            { t: 'tf', q: 'دعوى الإبطال للاستغلال تسقط بمرور 15 سنة.', a: 'خطأ. تسقط دعوى الاستغلال بمرور "سنة واحدة" من تاريخ إبرام العقد (المادة 90).', ref: 'صفحة 13' },
+            // --- Pillars (Object/Cause) ---
+            { 
+                cat: 'pillars', 
+                q: 'التعامل في تركة إنسان على قيد الحياة جائز إذا وافق المورث.', 
+                isCorrect: false, 
+                expl: 'باطل بطلاناً مطلقاً لمخالفته النظام العام، ولو برضا المورث (المادة 92).', 
+                ref: 'صفحة 14' 
+            },
+            { 
+                cat: 'pillars', 
+                q: 'يفترض القانون أن لكل التزام سبباً مشروعاً ما لم يقم الدليل على العكس.', 
+                isCorrect: true, 
+                expl: 'المادة 98 تضع قرينة قانونية بسيطة على وجود السبب ومشروعيته.', 
+                ref: 'صفحة 15' 
+            },
 
-            [cite_start]// --- المحل والسبب --- [cite: 249, 250, 265]
-            { t: 'tf', q: 'يجوز التعامل في تركة إنسان على قيد الحياة إذا وافق الورثة.', a: 'خطأ. التعامل في التركات المستقبلية باطل بطلاناً مطلقاً ولو برضا المورث (المادة 92).', ref: 'صفحة 14' },
-            { t: 'tf', q: 'إذا كان محل الالتزام مستحيلاً استحالة مطلقة، فإن العقد يكون باطلاً.', a: 'صحيح. أما الاستحالة النسبية فلا تبطل العقد وتوجب التعويض.', ref: 'صفحة 14' },
-            { t: 'tf', q: 'يفترض القانون أن لكل التزام سبباً مشروعاً حتى يثبت العكس.', a: 'صحيح. (المادة 98).', ref: 'صفحة 15' },
+            // --- Effects & Dissolution ---
+            { 
+                cat: 'effects', 
+                q: 'في الفسخ الاتفاقي، يملك القاضي سلطة منح نظرة ميسرة للمدين.', 
+                isCorrect: false, 
+                expl: 'في الفسخ الاتفاقي الصريح، تسلب سلطة القاضي التقديرية ويحكم بالفسخ حتماً.', 
+                ref: 'صفحة 25' 
+            },
+            { 
+                cat: 'effects', 
+                q: 'نظرية الظروف الطارئة تؤدي إلى فسخ العقد.', 
+                isCorrect: false, 
+                expl: 'تؤدي إلى تعديل العقد برد الالتزام المرهق إلى الحد المعقول، وليس الفسخ.', 
+                ref: 'صفحة 24' 
+            },
+            { 
+                cat: 'effects', 
+                q: 'البطلان المطلق لا تلحقه الإجازة.', 
+                isCorrect: true, 
+                expl: 'لأنه عقد معدوم، والإجازة ترد فقط على العقد القابل للإبطال (البطلان النسبي).', 
+                ref: 'صفحة 18' 
+            },
 
-            [cite_start]// --- البطلان --- [cite: 318, 321, 353]
-            { t: 'tf', q: 'العقد الباطل بطلاناً مطلقاً يمكن تصحيحه بالإجازة.', a: 'خطأ. البطلان المطلق لا تلحقه الإجازة لأنه عدم. الإجازة ترد فقط على العقد القابل للإبطال.', ref: 'صفحة 18' },
-            { t: 'tf', q: 'تسقط دعوى البطلان المطلق بمضي 15 سنة من وقت العقد.', a: 'صحيح. (المادة 102).', ref: 'صفحة 18' },
-            { t: 'tf', q: 'يسقط الحق في طلب إبطال العقد (البطلان النسبي) بمرور 5 سنوات من زوال العيب.', a: 'صحيح. ولا تتجاوز 10 سنوات من تاريخ العقد.', ref: 'صفحة 20' },
-
-            [cite_start]// --- الآثار والظروف الطارئة --- [cite: 409, 421, 426]
-            { t: 'tf', q: 'القاضي لا يجوز له تعديل العقد إلا في حالات استثنائية نص عليها القانون.', a: 'صحيح. الأصل أن العقد شريعة المتعاقدين.', ref: 'صفحة 22' },
-            { t: 'tf', q: 'نظرية الظروف الطارئة تطبق على عقود الغرر (العقود الاحتمالية).', a: 'خطأ. شرط تطبيقها أن يكون العقد محدداً، لأن عقود الغرر تقوم أصلاً على المخاطرة.', ref: 'صفحة 23' },
-            { t: 'tf', q: 'أثر الظروف الطارئة هو فسخ العقد.', a: 'خطأ. أثرها هو "رد الالتزام المرهق إلى الحد المعقول" وليس الفسخ (تعديل العقد).', ref: 'صفحة 24' },
-
-            [cite_start]// --- الفسخ والانفساخ --- [cite: 464, 472, 493]
-            { t: 'tf', q: 'في الفسخ الاتفاقي، يملك القاضي سلطة منح مهلة للمدين (نظرة ميسرة).', a: 'خطأ. في الفسخ الاتفاقي الصريح، القاضي دوره التحقق فقط ويحكم بالفسخ حتماً ولا يملك منح مهلة.', ref: 'صفحة 25' },
-            { t: 'tf', q: 'الانفساخ يقع بقوة القانون عند استحالة التنفيذ لسبب أجنبي.', a: 'صحيح. وينقضي الالتزام دون تعويض.', ref: 'صفحة 26' },
-            { t: 'tf', q: 'الدفع بعدم التنفيذ يتطلب إعذار المدين أولاً.', a: 'خطأ. لا يشترط الإعذار في الدفع بعدم التنفيذ (المادة 123).', ref: 'صفحة 27' },
-
-            [cite_start]// --- المسؤولية التقصيرية --- [cite: 537, 569, 616]
-            { t: 'tf', q: 'سن التمييز في المسؤولية التقصيرية هو 16 سنة.', a: 'خطأ. سن التمييز هو 13 سنة (المادة 125).', ref: 'صفحة 29' },
-            { t: 'tf', q: 'التعسف في استعمال الحق يعتبر صورة من صور الخطأ التقصيري.', a: 'صحيح. (المادة 124 مكرر).', ref: 'صفحة 31' },
-            { t: 'tf', q: 'تنتفي المسؤولية التقصيرية إذا أثبت الشخص السبب الأجنبي.', a: 'صحيح. السبب الأجنبي ينفي علاقة السببية.', ref: 'صفحة 34' },
-
-            [cite_start]// --- مسؤولية الغير --- [cite: 664, 699, 708]
-            { t: 'tf', q: 'مسؤولية متولي الرقابة (مثل الأب) تقوم على أساس خطأ واجب الإثبات.', a: 'خطأ. تقوم على أساس "خطأ مفترض" قابل لإثبات العكس.', ref: 'صفحة 37' },
-            { t: 'tf', q: 'مسؤولية المتبوع عن أعمال تابعه تقوم على خطأ مفترض يقبل إثبات العكس.', a: 'خطأ. مسؤولية المتبوع مسؤولية تبعية (بقوة القانون) لا تدفع بنفي الخطأ، بل بنفي السببية فقط.', ref: 'صفحة 39' },
-            { t: 'tf', q: 'يحق للمتبوع الرجوع على تابعه في جميع الأحوال.', a: 'خطأ. يحق له الرجوع فقط إذا ارتكب التابع "خطأ جسيماً" (المادة 137 المعدلة).', ref: 'صفحة 40' }
+            // --- Tort Liability ---
+            { 
+                cat: 'tort', 
+                q: 'سن التمييز في المسؤولية التقصيرية هو 19 سنة.', 
+                isCorrect: false, 
+                expl: 'سن التمييز (الإدراك) هو 13 سنة (المادة 125).', 
+                ref: 'صفحة 29' 
+            },
+            { 
+                cat: 'tort', 
+                q: 'مسؤولية المتبوع عن أعمال تابعه تقوم على خطأ مفترض.', 
+                isCorrect: false, 
+                expl: 'هي مسؤولية تبعية بحكم القانون، لا تدفع بنفي الخطأ بل بنفي العلاقة السببية فقط.', 
+                ref: 'صفحة 39' 
+            },
+            { 
+                cat: 'tort', 
+                q: 'يحق للمتبوع الرجوع على تابعه بما دفعه من تعويض إذا ارتكب التابع خطأً جسيماً.', 
+                isCorrect: true, 
+                expl: 'المادة 137 (المعدلة) قيدت رجوع المتبوع بحالة الخطأ الجسيم للتابع.', 
+                ref: 'صفحة 40' 
+            },
+             { 
+                cat: 'tort', 
+                q: 'مسؤولية متولي الرقابة يمكن دفعها بإثبات القيام بواجب الرقابة.', 
+                isCorrect: true, 
+                expl: 'لأنها تقوم على أساس خطأ مفترض قابل لإثبات العكس.', 
+                ref: 'صفحة 37' 
+            }
         ];
 
         // ==========================================
-        // 2. منطق التطبيق (Application Logic)
+        // 2. EXAM ENGINE (Logic Layer)
         // ==========================================
+        const examEngine = {
+            questions: [],
+            currentIndex: 0,
+            score: 0,
+            stats: {}, // To track performance by category
+            timer: null,
 
-        let currentMode = 'review';
-        let examQuestions = [];
-        let currentQIndex = 0;
-        let score = 0;
-        let timerInterval;
+            // Fisher-Yates Shuffle for true randomness
+            shuffle: (array) => {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            },
 
-        // تهيئة عند التحميل
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('dbCount').innerText = questionsDB.length;
-            renderReviewQuestions();
-            startCountdown();
+            start: () => {
+                // Prepare Analytics
+                examEngine.stats = {
+                    consent: { total: 0, correct: 0 },
+                    vices: { total: 0, correct: 0 },
+                    pillars: { total: 0, correct: 0 },
+                    effects: { total: 0, correct: 0 },
+                    tort: { total: 0, correct: 0 }
+                };
 
-            // تفعيل البحث
-            document.getElementById('searchBox').addEventListener('input', (e) => {
-                renderReviewQuestions(e.target.value);
-            });
-        });
+                // Select 15 random questions
+                examEngine.questions = examEngine.shuffle([...db]).slice(0, 15);
+                examEngine.currentIndex = 0;
+                examEngine.score = 0;
 
-        // تبديل الأوضاع
-        function switchMode(mode) {
-            currentMode = mode;
-            document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
-            document.querySelector(`.btn-${mode}`).classList.add('active');
+                // UI Updates
+                document.getElementById('examStart').style.display = 'none';
+                document.getElementById('examActive').style.display = 'block';
+                document.getElementById('examResult').style.display = 'none';
+                
+                examEngine.renderQuestion();
+                examEngine.startTimer();
+            },
 
+            renderQuestion: () => {
+                const q = examEngine.questions[examEngine.currentIndex];
+                document.getElementById('qText').innerText = q.q;
+                document.getElementById('qProgress').innerText = `${examEngine.currentIndex + 1} / 15`;
+                document.getElementById('qCategory').innerText = `التصنيف: ${categories[q.cat]}`;
+                
+                // Reset UI state
+                document.getElementById('feedbackBox').style.display = 'none';
+                document.getElementById('nextBtn').style.display = 'none';
+                const opts = document.querySelectorAll('.opt-btn');
+                opts.forEach(btn => {
+                    btn.disabled = false;
+                    btn.classList.remove('correct', 'wrong');
+                    btn.style.opacity = '1';
+                });
+            },
+
+            answer: (userChoice) => {
+                const q = examEngine.questions[examEngine.currentIndex];
+                const isCorrect = (userChoice === q.isCorrect); // The robust logic!
+
+                // Update Stats
+                examEngine.stats[q.cat].total++;
+                if (isCorrect) {
+                    examEngine.score++;
+                    examEngine.stats[q.cat].correct++;
+                }
+
+                // UI Feedback
+                const feedback = document.getElementById('feedbackBox');
+                feedback.style.display = 'block';
+                feedback.className = isCorrect ? 'feedback success' : 'feedback error';
+                feedback.innerHTML = `
+                    <strong>${isCorrect ? 'أحسنت! إجابة صحيحة.' : 'للأسف إجابة خاطئة.'}</strong><br>
+                    ${q.expl} <span style="font-size:0.8rem">(${q.ref})</span>
+                `;
+
+                // Lock buttons
+                document.querySelectorAll('.opt-btn').forEach(btn => btn.disabled = true);
+                document.getElementById('nextBtn').style.display = 'block';
+            },
+
+            next: () => {
+                examEngine.currentIndex++;
+                if (examEngine.currentIndex < examEngine.questions.length) {
+                    examEngine.renderQuestion();
+                } else {
+                    examEngine.finish();
+                }
+            },
+
+            finish: () => {
+                clearInterval(examEngine.timer);
+                document.getElementById('examActive').style.display = 'none';
+                document.getElementById('examResult').style.display = 'block';
+
+                const percentage = Math.round((examEngine.score / 15) * 100);
+                document.getElementById('finalScore').innerText = `${percentage}%`;
+
+                // Generate Smart Analytics HTML
+                let analyticsHTML = '';
+                for (const [key, val] of Object.entries(examEngine.stats)) {
+                    if (val.total > 0) {
+                        const catScore = Math.round((val.correct / val.total) * 100);
+                        let color = catScore > 70 ? 'var(--success)' : (catScore < 50 ? 'var(--error)' : 'var(--accent)');
+                        
+                        analyticsHTML += `
+                            <div class="stat-card" style="border-right-color:${color}">
+                                <div class="stat-label">${categories[key]}</div>
+                                <div class="stat-val" style="color:${color}">${catScore}%</div>
+                                <div style="font-size:0.8rem; opacity:0.7">(${val.correct}/${val.total})</div>
+                            </div>
+                        `;
+                    }
+                }
+                document.getElementById('analyticsBox').innerHTML = analyticsHTML;
+
+                // Message
+                const msg = percentage >= 60 ? "أداء جيد، انظر للتحليل لمعرفة نقاط الضعف." : "تحتاج لمراجعة مكثفة للمحاور ذات النسبة المنخفضة.";
+                document.getElementById('finalMsg').innerText = msg;
+            },
+
+            startTimer: () => {
+                let sec = 0;
+                const el = document.getElementById('timer');
+                clearInterval(examEngine.timer);
+                examEngine.timer = setInterval(() => {
+                    sec++;
+                    const m = Math.floor(sec / 60).toString().padStart(2,'0');
+                    const s = (sec % 60).toString().padStart(2,'0');
+                    el.innerText = `${m}:${s}`;
+                }, 1000);
+            }
+        };
+
+        // ==========================================
+        // 3. UI HANDLING
+        // ==========================================
+        function setMode(mode) {
+            document.querySelectorAll('.btn-outline').forEach(b => b.classList.remove('active'));
+            document.getElementById(mode === 'review' ? 'btnReview' : 'btnExam').classList.add('active');
+            
             if (mode === 'review') {
-                document.querySelector('.review-interface').style.display = 'block';
-                document.getElementById('questionsList').style.display = 'block';
-                document.querySelector('.exam-interface').classList.remove('exam-active');
-                document.querySelector('.exam-interface').style.display = 'none';
-                stopExam();
+                document.getElementById('reviewSection').style.display = 'block';
+                document.getElementById('examSection').style.display = 'none';
+                renderReview();
             } else {
-                document.querySelector('.review-interface').style.display = 'none';
-                document.getElementById('questionsList').style.display = 'none';
-                document.querySelector('.exam-interface').style.display = 'block';
-                document.querySelector('.exam-interface').classList.add('exam-active');
-                resetExamUI();
+                document.getElementById('reviewSection').style.display = 'none';
+                document.getElementById('examSection').style.display = 'block';
+                document.getElementById('examStart').style.display = 'block';
+                document.getElementById('examActive').style.display = 'none';
+                document.getElementById('examResult').style.display = 'none';
             }
         }
 
-        // ---------------- وظائف المراجعة ----------------
-        function renderReviewQuestions(filter = '') {
-            const container = document.getElementById('questionsList');
+        function renderReview(term = '') {
+            const container = document.getElementById('questionsContainer');
             container.innerHTML = '';
             
-            const filtered = questionsDB.filter(item => 
-                item.q.includes(filter) || item.a.includes(filter)
-            );
-
+            const filtered = db.filter(i => i.q.includes(term) || i.expl.includes(term));
+            
             if (filtered.length === 0) {
-                container.innerHTML = '<div style="text-align:center; padding:20px; color:#94a3b8;">لا توجد نتائج...</div>';
+                container.innerHTML = '<div style="padding:20px; text-align:center; color:#94a3b8">لا توجد نتائج</div>';
                 return;
             }
 
             filtered.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'q-card';
-                card.innerHTML = `
+                const div = document.createElement('div');
+                div.className = 'q-item';
+                div.innerHTML = `
                     <div class="q-head" onclick="this.parentElement.classList.toggle('open')">
-                        <div>
-                            ${item.q}
-                            <span class="badge">${item.t === 'tf' ? 'صح/خطأ' : 'مباشر'}</span>
-                        </div>
-                        <span class="arrow">▼</span>
+                        <div>${item.q} <span class="cat-tag">${categories[item.cat]}</span></div>
+                        <span>▼</span>
                     </div>
                     <div class="q-body">
-                        <div class="answer-content">
-                            <strong>الإجابة:</strong> ${item.a}
-                            <span class="ref-text">المصدر: ${item.ref}</span>
+                        <div style="font-weight:bold; color:${item.isCorrect ? 'var(--success)' : 'var(--error)'}; margin-bottom:5px;">
+                            ${item.isCorrect ? '✅ صحيح' : '❌ خطأ'}
                         </div>
+                        ${item.expl} <br>
+                        <span style="font-size:0.8rem; color:#94a3b8">المصدر: ${item.ref}</span>
                     </div>
                 `;
-                container.appendChild(card);
+                container.appendChild(div);
             });
         }
 
-        // ---------------- وظائف الامتحان ----------------
-        function startExam() {
-            // اختيار 20 سؤال عشوائي
-            examQuestions = [...questionsDB].sort(() => 0.5 - Math.random()).slice(0, 20);
-            currentQIndex = 0;
-            score = 0;
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            renderReview();
             
-            document.getElementById('quizStart').style.display = 'none';
-            document.getElementById('quizActive').style.display = 'block';
-            document.getElementById('quizResult').style.display = 'none';
-            
-            startExamTimer();
-            showQuestion();
-        }
-
-        function showQuestion() {
-            const q = examQuestions[currentQIndex];
-            document.getElementById('qProgress').innerText = `سؤال ${currentQIndex + 1} / 20`;
-            document.getElementById('examQText').innerText = q.q;
-            document.getElementById('currentScore').innerText = `النقاط: ${score}`;
-            
-            // إعادة تعيين الواجهة
-            document.getElementById('feedback').style.display = 'none';
-            document.getElementById('nextBtn').style.display = 'none';
-            document.querySelectorAll('.opt-btn').forEach(btn => {
-                btn.disabled = false;
-                btn.style.opacity = '1';
+            // Search Listener
+            document.getElementById('searchInput').addEventListener('input', (e) => {
+                renderReview(e.target.value);
             });
-        }
 
-        function checkAnswer(userChoice) {
-            const q = examQuestions[currentQIndex];
-            // منطق تحديد الصحة: إذا قال المستخدم "صح" وكان الجواب في النص يبدأ بـ "صحيح"
-            const isActuallyTrue = q.a.startsWith('صحيح');
-            const isCorrect = (userChoice === isActuallyTrue);
-
-            const feedback = document.getElementById('feedback');
-            feedback.style.display = 'block';
-
-            if (isCorrect) {
-                score++;
-                feedback.className = 'feedback-area feedback-correct';
-                feedback.innerHTML = `<strong>أحسنت! إجابة موفقة.</strong><br>${q.a}`;
-            } else {
-                feedback.className = 'feedback-area feedback-wrong';
-                feedback.innerHTML = `<strong>للأسف خطأ.</strong><br>${q.a}`;
-            }
-
-            // تعطيل الأزرار
-            document.querySelectorAll('.opt-btn').forEach(btn => btn.disabled = true);
-            document.getElementById('nextBtn').style.display = 'block';
-            document.getElementById('currentScore').innerText = `النقاط: ${score}`;
-        }
-
-        function nextQuestion() {
-            currentQIndex++;
-            if (currentQIndex < examQuestions.length) {
-                showQuestion();
-            } else {
-                finishExam();
-            }
-        }
-
-        function finishExam() {
-            clearInterval(timerInterval);
-            document.getElementById('quizActive').style.display = 'none';
-            document.getElementById('quizResult').style.display = 'block';
-            
-            const percentage = Math.round((score / 20) * 100);
-            document.getElementById('finalScore').innerText = `${percentage}%`;
-            
-            let msg = '';
-            if (percentage >= 90) msg = 'أنت مشروع فقيه قانوني! ممتاز.';
-            else if (percentage >= 70) msg = 'مستوى جيد جداً، راجع الأخطاء القليلة.';
-            else if (percentage >= 50) msg = 'ناجح، ولكن تحتاج لمزيد من التركيز.';
-            else msg = 'تحتاج لمراجعة مكثفة للملخص.';
-            
-            document.getElementById('resultMsg').innerText = msg;
-        }
-
-        function startExamTimer() {
-            let seconds = 0;
-            const timerDisplay = document.getElementById('examTimer');
-            clearInterval(timerInterval);
-            timerInterval = setInterval(() => {
-                seconds++;
-                const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
-                const secs = (seconds % 60).toString().padStart(2, '0');
-                timerDisplay.innerText = `${mins}:${secs}`;
-            }, 1000);
-        }
-
-        function stopExam() {
-            clearInterval(timerInterval);
-            resetExamUI();
-        }
-
-        function resetExamUI() {
-            document.getElementById('quizStart').style.display = 'block';
-            document.getElementById('quizActive').style.display = 'none';
-            document.getElementById('quizResult').style.display = 'none';
-        }
-
-        // ---------------- العداد التنازلي العام ----------------
-        function startCountdown() {
+            // Countdown
             const examDate = new Date('2026-01-11T10:00:00').getTime();
             setInterval(() => {
-                const now = new Date().getTime();
-                const dist = examDate - now;
-                
-                if (dist < 0) return;
-
-                document.getElementById('d').innerText = Math.floor(dist / (1000 * 60 * 60 * 24));
-                document.getElementById('h').innerText = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                document.getElementById('m').innerText = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
+                const diff = examDate - new Date().getTime();
+                if (diff < 0) return;
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById('countdown').innerHTML = `
+                    <div class="time-unit"><span class="time-val">${d}</span><span class="time-lbl">يوم</span></div>
+                    <div class="time-unit"><span class="time-val">${h}</span><span class="time-lbl">ساعة</span></div>
+                `;
             }, 1000);
-        }
-
+        });
     </script>
 </body>
 </html>
