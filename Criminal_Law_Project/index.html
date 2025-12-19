@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المنصة الجنائية | القانون الجنائي الخاص</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-overlay"></div>
+        <div class="header-content wrapper">
+            <span class="badge-criminal">السنة الثانية / ماستر</span>
+            <h1 class="hero-title">القانون الجنائي الخاص</h1>
+            <p class="hero-subtitle">الجرائم الواقعة على الأشخاص • العرض • الشرف والاعتبار</p>
+            
+            <div id="countdown" class="countdown-grid"></div>
+            <p class="exam-date">تاريخ الامتحان: 20 جانفي 2026</p>
+        </div>
+    </header>
+
+    <nav class="sticky-nav">
+        <div class="nav-container wrapper">
+            <button class="nav-btn active" data-target="review">
+                <span class="icon">⚖️</span> الجرائم والأركان
+            </button>
+            <button class="nav-btn" data-target="dictionary">
+                <span class="icon">📖</span> المصطلحات
+            </button>
+            <button class="nav-btn" data-target="exam">
+                <span class="icon">🚨</span> المحكمة الافتراضية
+            </button>
+            <button class="nav-btn" data-target="stats">
+                <span class="icon">📊</span> سجل الأحكام
+            </button>
+        </div>
+    </nav>
+
+    <main class="wrapper">
+        
+        <section id="view-review" class="view-section active">
+            <div class="toolbar">
+                <div class="search-wrapper">
+                    <input type="text" id="reviewSearch" placeholder="ابحث في الجرائم (مثلاً: سبق الإصرار، القذف، أدلة الزنا)...">
+                    <span class="search-icon">🔍</span>
+                </div>
+                <div class="filters">
+                    <button class="filter-btn active" data-cat="all">الكل</button>
+                    <button class="filter-btn" data-cat="murder">القتل العمد</button>
+                    <button class="filter-btn" data-cat="adultery">جريمة الزنا</button>
+                    <button class="filter-btn" data-cat="defamation">القذف والسب</button>
+                    <button class="filter-btn" data-cat="false_report">الوشاية الكاذبة</button>
+                </div>
+            </div>
+            <div id="questionsContainer" class="grid-layout">
+                </div>
+        </section>
+
+        <section id="view-dictionary" class="view-section">
+            <div class="toolbar">
+                <input type="text" id="dictSearch" class="search-input-lg" placeholder="ابحث عن مصطلح قانوني...">
+            </div>
+            <div id="dictionaryContainer" class="dict-layout"></div>
+        </section>
+
+        <section id="view-exam" class="view-section">
+            <div id="exam-start" class="exam-panel center-mode">
+                <div class="gavel-icon">🔨</div>
+                <h2>جلسة الحكم</h2>
+                <p>سيعرض عليك النظام 20 قضية وعليك تكييفها أو الحكم بصحتها قانوناً.</p>
+                <button id="btnStartExam" class="btn-action">رفع الجلسة (بدء)</button>
+            </div>
+
+            <div id="exam-active" class="exam-panel hidden">
+                <div class="exam-top-bar">
+                    <div class="progress-track"><div id="examProgress" class="progress-fill"></div></div>
+                    <div class="exam-info">
+                        <span id="qCounter">1 / 20</span>
+                        <span id="examTimer" class="timer-red">00:00</span>
+                    </div>
+                </div>
+                
+                <h3 id="examQuestion" class="q-text-large">...</h3>
+                <div class="q-category-label" id="examCatLabel">تصنيف الجريمة</div>
+                
+                <div class="answers-grid">
+                    <button class="ans-btn" onclick="ExamEngine.answer(true)">صحيح (إدانة)</button>
+                    <button class="ans-btn" onclick="ExamEngine.answer(false)">خطأ (براءة)</button>
+                </div>
+
+                <div id="examFeedback" class="feedback-panel hidden"></div>
+                <button id="btnNextQ" class="btn-next hidden">القضية التالية</button>
+            </div>
+
+            <div id="exam-result" class="exam-panel center-mode hidden">
+                <div class="verdict-ring">
+                    <span id="scoreText">0%</span>
+                </div>
+                <h2 id="resultTitle">منطوق الحكم</h2>
+                <p id="resultAdvice" style="margin-bottom:20px; color:#666"></p>
+                
+                <div id="detailedStats" class="stats-list"></div>
+                
+                <button onclick="location.reload()" class="btn-action-outline">جلسة جديدة</button>
+            </div>
+        </section>
+
+        <section id="view-stats" class="view-section">
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-num" id="totalAttempts">0</span>
+                    <span class="stat-label">عدد القضايا المفصولة</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-num" id="bestScore">0%</span>
+                    <span class="stat-label">أعلى دقة قانونية</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-num" id="avgScore">0%</span>
+                    <span class="stat-label">المعدل التراكمي</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>المنصة الجنائية الجزائرية - جميع الحقوق محفوظة © 2026</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
