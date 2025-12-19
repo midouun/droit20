@@ -1,0 +1,217 @@
+/* =========================================
+   1. المتغيرات والتهيئة (Variables & Reset)
+   ========================================= */
+:root {
+    --primary: #0f172a;
+    --primary-light: #1e293b;
+    --accent: #d97706; /* ذهبي */
+    --accent-hover: #b45309;
+    --bg-body: #f1f5f9;
+    --bg-card: #ffffff;
+    --text-main: #334155;
+    --text-light: #64748b;
+    --success: #10b981;
+    --success-bg: #d1fae5;
+    --error: #ef4444;
+    --error-bg: #fee2e2;
+    --border: #e2e8f0;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+    --radius: 16px;
+    --font: 'Tajawal', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+body { font-family: var(--font); background: var(--bg-body); color: var(--text-main); line-height: 1.6; }
+button { font-family: inherit; cursor: pointer; border: none; }
+
+/* =========================================
+   2. الهيدر (Header)
+   ========================================= */
+.main-header {
+    background: linear-gradient(135deg, var(--primary) 0%, #020617 100%);
+    color: white;
+    padding: 60px 20px 80px;
+    text-align: center;
+    border-radius: 0 0 50px 50px;
+    position: relative;
+    overflow: hidden;
+}
+
+.badge-pill {
+    background: rgba(255,255,255,0.1);
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    border: 1px solid rgba(255,255,255,0.2);
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.hero-title { font-size: 2.8rem; font-weight: 800; margin-bottom: 10px; }
+.hero-subtitle { opacity: 0.8; font-size: 1.1rem; max-width: 600px; margin: 0 auto 30px; }
+
+/* العداد */
+.countdown-grid { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+.time-unit {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    padding: 15px;
+    border-radius: 12px;
+    min-width: 80px;
+    border: 1px solid rgba(255,255,255,0.15);
+}
+.time-val { display: block; font-size: 1.8rem; font-weight: 700; line-height: 1; }
+.time-lbl { font-size: 0.8rem; opacity: 0.8; }
+
+/* =========================================
+   3. التنقل (Navigation)
+   ========================================= */
+.sticky-nav {
+    position: sticky;
+    top: 20px;
+    z-index: 100;
+    margin-top: -40px;
+    padding: 0 20px;
+}
+
+.nav-container {
+    background: white;
+    box-shadow: var(--shadow-lg);
+    border-radius: 20px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.nav-btn {
+    flex: 1;
+    background: transparent;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: 700;
+    color: var(--text-light);
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.nav-btn:hover { background: var(--bg-body); color: var(--primary); }
+.nav-btn.active { background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(15,23,42,0.3); }
+
+/* =========================================
+   4. المحتوى والأقسام (Main Content)
+   ========================================= */
+.wrapper { max-width: 900px; margin: 0 auto; padding: 20px; }
+.view-section { display: none; animation: fadeIn 0.4s ease; }
+.view-section.active { display: block; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* أدوات البحث والفلترة */
+.toolbar { margin-bottom: 25px; }
+.search-box { position: relative; margin-bottom: 15px; }
+.search-box input, .search-input-lg {
+    width: 100%; padding: 16px 20px;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+.search-box input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(217,119,6,0.1); }
+.search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); opacity: 0.5; }
+
+.filters { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; }
+.filter-tag {
+    background: white; border: 1px solid var(--border);
+    padding: 8px 16px; border-radius: 20px;
+    font-weight: 600; color: var(--text-light); transition: 0.2s; white-space: nowrap;
+}
+.filter-tag.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+/* بطاقات الأسئلة والقاموس */
+.cards-grid { display: flex; flex-direction: column; gap: 15px; }
+.q-card, .dict-card {
+    background: white; padding: 20px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    transition: 0.2s;
+}
+.q-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); border-color: var(--accent); }
+
+.q-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+.q-title { font-weight: 700; font-size: 1.1rem; }
+.q-cat { font-size: 0.75rem; background: var(--bg-body); padding: 4px 8px; border-radius: 6px; color: var(--text-light); }
+.q-body { max-height: 0; overflow: hidden; transition: 0.3s; color: var(--text-light); }
+.q-card.open .q-body { max-height: 500px; margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--border); }
+.ref-tag { display: block; margin-top: 10px; font-size: 0.8rem; font-style: italic; opacity: 0.7; }
+
+/* القاموس */
+.dict-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
+.dict-term { color: var(--accent); font-weight: 800; font-size: 1.2rem; margin-bottom: 5px; }
+
+/* =========================================
+   5. واجهة الامتحان (Exam UI)
+   ========================================= */
+.exam-card {
+    background: white; padding: 40px;
+    border-radius: 24px; box-shadow: var(--shadow-lg);
+    min-height: 400px;
+}
+.center-content { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+
+.progress-container { width: 100%; height: 8px; background: var(--bg-body); border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
+.progress-bar { height: 100%; background: var(--accent); width: 0%; transition: 0.5s; }
+
+.question-text { font-size: 1.5rem; font-weight: 800; margin: 30px 0; line-height: 1.5; }
+.options-group { display: flex; gap: 15px; width: 100%; }
+.option-btn {
+    flex: 1; padding: 20px;
+    border: 2px solid var(--border); border-radius: 16px;
+    background: white; font-size: 1.2rem; font-weight: 700;
+    transition: 0.2s;
+}
+.option-btn:hover { border-color: var(--accent); background: #fffbeb; }
+
+/* حالة الإجابة */
+.feedback-box { margin-top: 20px; padding: 15px; border-radius: 12px; width: 100%; text-align: right; }
+.feedback-box.correct { background: var(--success-bg); color: #065f46; border: 1px solid var(--success); }
+.feedback-box.wrong { background: var(--error-bg); color: #991b1b; border: 1px solid var(--error); }
+
+.btn-primary-lg, .btn-next {
+    background: var(--primary); color: white;
+    padding: 15px 40px; border-radius: 14px;
+    font-size: 1.1rem; font-weight: 700; margin-top: 20px;
+}
+.btn-next { width: 100%; background: var(--accent); }
+
+/* دائرة النتيجة */
+.circular-chart { width: 150px; height: 150px; }
+.circle-bg { fill: none; stroke: var(--bg-body); stroke-width: 3.8; }
+.circle { fill: none; stroke: var(--success); stroke-width: 2.8; stroke-linecap: round; transition: stroke-dasharray 1s ease; }
+.percentage { fill: var(--primary); font-family: sans-serif; font-weight: bold; font-size: 0.5em; text-anchor: middle; }
+
+/* =========================================
+   6. الإحصائيات (Stats)
+   ========================================= */
+.stats-dashboard { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px; }
+.stat-widget { background: white; padding: 20px; border-radius: 16px; text-align: center; box-shadow: var(--shadow-sm); }
+.stat-num { font-size: 2.5rem; font-weight: 900; color: var(--primary); display: block; }
+.stat-lbl { color: var(--text-light); font-size: 0.9rem; }
+
+/* Helpers */
+.hidden { display: none !important; }
+.icon-lg { font-size: 4rem; margin-bottom: 20px; }
+footer { text-align: center; padding: 40px; color: var(--text-light); }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .options-group { flex-direction: column; }
+    .stats-dashboard { grid-template-columns: 1fr; }
+    .hero-title { font-size: 2rem; }
+}
