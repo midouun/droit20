@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التنظيم القضائي | سنة أولى حقوق</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --brand-color: #1a2a6c; /* أزرق رسمي */
+            --brand-accent: #b21f1f; /* أحمر (علم الجزائر) */
+            --brand-gold: #fdbb2d;   /* ذهبي للتميز */
+            --bg-body: #f4f7f6;
+            --bg-card: #ffffff;
+            --radius: 16px;
+        }
+
+        body.dark-mode {
+            --brand-color: #ecf0f1;
+            --bg-body: #0f2027;
+            --bg-card: #203a43;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; outline: none; }
+        body { background: var(--bg-body); color: #2c3e50; height: 100vh; overflow: hidden; transition: 0.3s; }
+        body.dark-mode { color: #ecf0f1; }
+
+        /* --- الشاشة الرئيسية: قائمة الامتحانات --- */
+        #main-menu-view {
+            padding: 40px; height: 100%; overflow-y: auto; text-align: center;
+            background: linear-gradient(135deg, rgba(26, 42, 108, 0.05) 0%, rgba(178, 31, 31, 0.05) 100%);
+        }
+        .header-title { font-size: 2.5rem; font-weight: 900; color: var(--brand-color); margin-bottom: 5px; }
+        .dark-mode .header-title { color: var(--brand-gold); }
+        .header-subtitle { font-size: 1.2rem; opacity: 0.8; margin-bottom: 40px; color: var(--brand-accent); font-weight: bold; }
+        
+        .exams-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; max-width: 1000px; margin: 0 auto;
+        }
+        
+        .exam-card {
+            background: var(--bg-card); padding: 30px; border-radius: var(--radius);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05); cursor: pointer; transition: 0.3s;
+            border-top: 5px solid var(--brand-color); position: relative; text-align: right;
+        }
+        .exam-card:hover { transform: translateY(-8px); border-top-color: var(--brand-gold); }
+        .exam-icon { font-size: 2.5rem; margin-bottom: 15px; display: block; }
+        .exam-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 8px; }
+        .exam-desc { font-size: 0.9rem; opacity: 0.7; line-height: 1.6; }
+        
+        /* --- واجهة الامتحان الداخلي --- */
+        #app-view { display: none; height: 100%; }
+        
+        .sidebar {
+            width: 280px; background: linear-gradient(180deg, #1a2a6c 0%, #2a4858 100%);
+            color: white; padding: 25px; display: flex; flex-direction: column;
+            box-shadow: 5px 0 20px rgba(0,0,0,0.1);
+        }
+        .back-btn {
+            background: rgba(255,255,255,0.15); border: none; color: white; padding: 10px;
+            border-radius: 10px; cursor: pointer; margin-bottom: 30px; display: flex; align-items: center; gap: 10px;
+            font-weight: bold; transition: 0.2s;
+        }
+        .back-btn:hover { background: var(--brand-gold); color: #000; }
+        
+        .nav-menu { display: flex; flex-direction: column; gap: 12px; }
+        .nav-btn {
+            background: transparent; border: none; color: rgba(255,255,255,0.8); padding: 15px;
+            text-align: right; cursor: pointer; border-radius: 12px; font-size: 1rem; transition: 0.2s;
+            display: flex; align-items: center; gap: 15px;
+        }
+        .nav-btn:hover, .nav-btn.active { background: rgba(255,255,255,0.1); color: #fff; font-weight: bold; }
+        .nav-btn.active { border-right: 4px solid var(--brand-gold); }
+
+        .main-content { flex: 1; padding: 40px; overflow-y: auto; background: var(--bg-body); }
+        
+        /* Cards & Content */
+        .content-card {
+            background: var(--bg-card); padding: 30px; border-radius: var(--radius); margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-right: 4px solid var(--brand-color); animation: fadeIn 0.4s;
+        }
+        .content-card h3 { color: var(--brand-color); margin-bottom: 15px; font-size: 1.4rem; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .dark-mode .content-card h3 { color: var(--brand-gold); }
+        .citation { display: block; margin-top: 10px; font-size: 0.85rem; color: #7f8c8d; font-style: italic; background: rgba(0,0,0,0.03); padding: 5px 10px; border-radius: 5px; width: fit-content; }
+
+        /* Quiz UI */
+        .option-btn {
+            display: block; width: 100%; padding: 18px 25px; margin: 15px 0; background: var(--bg-card);
+            border: 1px solid rgba(0,0,0,0.1); border-radius: 12px; cursor: pointer; font-size: 1.1rem;
+            transition: 0.2s; text-align: right; color: inherit; font-weight: 600;
+        }
+        .option-btn:hover:not(.disabled) { border-color: var(--brand-color); background: rgba(26, 42, 108, 0.05); }
+        .option-btn.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+        .option-btn.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+        
+        .btn-primary {
+            background: var(--brand-color); color: white; border: none; padding: 12px 35px;
+            border-radius: 30px; cursor: pointer; font-size: 1.1rem; font-weight: bold; margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: 0.3s;
+        }
+        .btn-primary:hover { background: var(--brand-accent); transform: translateY(-3px); }
+
+        .hidden { display: none !important; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            #app-view { flex-direction: column; }
+            .sidebar { width: 100%; padding: 15px; flex-direction: row; justify-content: space-between; align-items: center; }
+            .nav-menu { flex-direction: row; }
+            .nav-btn span { display: none; }
+            .back-btn span { display: none; }
+            .main-content { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main-menu-view">
+        <h1 class="header-title">⚖️ المنصة القضائية</h1>
+        <p class="header-subtitle">سنة أولى حقوق - مقياس التنظيم القضائي</p>
+        
+        <div class="exams-grid" id="exams-container">
+            </div>
+
+        <div style="margin-top: 50px;">
+            <button onclick="document.body.classList.toggle('dark-mode')" style="background:transparent; border:1px solid #ccc; padding:8px 20px; border-radius:20px; cursor:pointer; color:inherit">🌙 الوضع الليلي</button>
+        </div>
+    </div>
+
+    <div id="app-view">
+        <aside class="sidebar">
+            <button class="back-btn" onclick="app.goHome()">
+                <span>⬅</span> <span>العودة للقائمة</span>
+            </button>
+            <h3 id="sidebar-title" style="text-align:center; margin-bottom:20px; font-size:1.1rem; opacity:0.9"></h3>
+            
+            <nav class="nav-menu">
+                <button class="nav-btn active" onclick="app.switchTab('review', this)">
+                    <span>📚</span> <span>المراجعة والدروس</span>
+                </button>
+                <button class="nav-btn" onclick="app.switchTab('quiz', this)">
+                    <span>📝</span> <span>الأسئلة (QCM)</span>
+                </button>
+                <button class="nav-btn" onclick="app.switchTab('flashcards', this)">
+                    <span>💡</span> <span>بطاقات الذاكرة</span>
+                </button>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <section id="review-tab">
+                <div id="content-container"></div>
+            </section>
+
+            <section id="quiz-tab" class="hidden">
+                <div class="content-card" style="text-align:center; max-width:800px; margin:0 auto">
+                    <h2 id="quiz-title-display">اختبار المعلومات</h2>
+                    <p style="margin-bottom:20px; opacity:0.7">أجب عن الأسئلة التالية</p>
+                    
+                    <div id="quiz-start-btn">
+                        <button class="btn-primary" onclick="quizManager.start()">ابدأ الاختبار</button>
+                    </div>
+
+                    <div id="quiz-area" class="hidden" style="text-align:right; margin-top:30px">
+                        <div style="display:flex; justify-content:space-between; margin-bottom:15px; color:#888">
+                            <span id="q-progress">سؤال 1</span>
+                            <span id="score-display">النتيجة: 0</span>
+                        </div>
+                        <h3 id="q-text" style="font-size:1.5rem; margin-bottom:25px; line-height:1.5"></h3>
+                        <div id="q-options"></div>
+                        
+                        <div id="feedback" class="hidden" style="margin-top:20px; padding:20px; background:rgba(0,0,0,0.03); border-radius:10px">
+                            <h4 id="fb-msg" style="margin-bottom:10px"></h4>
+                            <p id="fb-exp"></p>
+                            <span id="fb-cite" class="citation"></span>
+                            <button class="btn-primary" onclick="quizManager.next()">التالي</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="flashcards-tab" class="hidden">
+                <div class="content-card" style="text-align:center; min-height:350px; display:flex; flex-direction:column; justify-content:center; align-items:center; cursor:pointer" onclick="flashcardManager.flip()">
+                    <div id="fc-face">
+                        <span style="font-size:3rem; display:block; margin-bottom:20px">❓</span>
+                        <h2 id="fc-text">السؤال هنا</h2>
+                        <p id="fc-sub" style="margin-top:20px; opacity:0.6">(اضغط لقلب البطاقة)</p>
+                    </div>
+                </div>
+                <div style="text-align:center">
+                    <button class="btn-primary" onclick="flashcardManager.next()">البطاقة التالية ➡</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // ==========================================
+        // قاعدة البيانات: هنا يمكنك إضافة امتحانات جديدة لنفس المقياس
+        // ==========================================
+        const database = {
+            // الامتحان الشامل (يحتوي على كل شيء)
+            "comprehensive_exam": {
+                title: "الاختبار الشامل (كل الدروس)",
+                desc: "يغطي المبادئ، القضاء العادي، الإداري، والمساعدين.",
+                icon: "🏛️",
+                lessons: [
+                    {
+                        title: "1. مبادئ التنظيم القضائي",
+                        content: `
+                        <p><strong>حق اللجوء للقضاء:</strong> حق دستوري (م 164-165 دستور 2020) لا يمكن التنازل عنه.</p>
+                        <p><strong>التقاضي على درجتين:</strong> (م 169 دستور) يسمح باستئناف الأحكام أمام جهة أعلى (المجلس القضائي أو المحكمة الإدارية للاستئناف).</p>
+                        <p><strong>العلانية:</strong> الجلسات علنية (م 169 دستور) إلا في حالات محددة (الأسرة، الأحداث) حفاظاً على النظام العام.</p>`
+                    },
+                    {
+                        title: "2. القضاء العادي (الهياكل)",
+                        content: `
+                        [cite_start]<p><strong>المحكمة (درجة 1):</strong> ذات اختصاص عام. الأصل فيها القضاء الفردي (ما عدا الاجتماعي، التجاري، الأحداث)[cite: 2205].</p>
+                        [cite_start]<p><strong>المجلس القضائي (درجة 2):</strong> يفصل في استئناف أحكام المحاكم بتشكيلة جماعية (3 قضاة)[cite: 2267].</p>
+                        <p><strong>المحكمة العليا:</strong> محكمة قانون (ليست درجة ثالثة). [cite_start]تتكون من 7 غرف (مدنية، عقارية، تجارية...)[cite: 2471].</p>`
+                    },
+                    {
+                        title: "3. القضاء الإداري",
+                        content: `
+                        [cite_start]<p><strong>المحاكم الإدارية:</strong> جهة الولاية العامة في المنازعات الإدارية[cite: 2540].</p>
+                        [cite_start]<p><strong>المحاكم الإدارية للاستئناف:</strong> استحدثت بالقانون 22/07 لتكريس مبدأ التقاضي على درجتين إدارياً[cite: 2576].</p>
+                        [cite_start]<p><strong>مجلس الدولة:</strong> هيئة مقومة لأعمال الجهات الإدارية وله دور استشاري[cite: 2600].</p>`
+                    },
+                    {
+                        title: "4. المحاكم المتخصصة (جديد)",
+                        content: `
+                        [cite_start]<p><strong>المحكمة التجارية المتخصصة:</strong> (قانون 22/13) تتشكل من رئيس و4 مساعدين خبراء[cite: 2337].</p>
+                        [cite_start]<p><strong>المحكمة العسكرية:</strong> تتبع وزارة الدفاع وتختص بالجرائم العسكرية[cite: 2360].</p>`
+                    }
+                ],
+                questions: [
+                    { q: "ما هي تشكيلة المحكمة التجارية المتخصصة؟", opts: ["قاضٍ فرد", "3 قضاة", "قاضٍ رئيس و4 مساعدين"], ans: 2, exp: "تتشكل من قاضٍ رئيس و4 مساعدين لهم دراية بالمسائل التجارية.", cite: "المادة 536 مكرر 2" },
+                    { q: "من يفصل في تنازع الاختصاص بين النظامين؟", opts: ["المحكمة العليا", "محكمة التنازع", "مجلس الدولة"], ans: 1, exp: "محكمة التنازع هي الهيئة الوحيدة المختصة دستورياً بذلك.", cite: "م 152 دستور" },
+                    { q: "مهلة استئناف أحكام محكمة الجنايات الابتدائية؟", opts: ["8 أيام", "10 أيام", "15 يوماً"], ans: 1, exp: "المهلة هي 10 أيام من تاريخ النطق بالحكم.", cite: "قانون الإجراءات الجزائية" },
+                    { q: "يعتبر المجلس القضائي:", opts: ["درجة ثالثة", "درجة ثانية", "محكمة نقض"], ans: 1, exp: "هو درجة ثانية ينظر في استئناف أحكام المحاكم.", cite: "قانون 22/10" },
+                    { q: "عدد قضاة محكمة التنازع؟", opts: ["5 قضاة", "7 قضاة", "9 قضاة"], ans: 1, exp: "تتكون من 7 قضاة: رئيس، 3 من المحكمة العليا، 3 من مجلس الدولة.", cite: "القانون العضوي 98/03" }
+                ],
+                flashcards: [
+                    { q: "تعريف المحضر القضائي", a: "ضابط عمومي مكلف بالتبليغ وتنفيذ الأحكام", cite: "قانون 06/03" },
+                    { q: "الغرف المجتمعة", a: "اجتماع غرف المحكمة العليا لتوحيد الاجتهاد", cite: "قانون عضوي" },
+                    { q: "سن القبول في القضاء", a: "ما بين 27 و 40 سنة", cite: "القانون الأساسي للقضاء" }
+                ]
+            },
+
+            // امتحان جزئي 1: القضاء العادي فقط (مثال للتوسع)
+            "ordinary_exam": {
+                title: "اختبار القضاء العادي",
+                desc: "يركز فقط على المحاكم، المجالس، والمحكمة العليا.",
+                icon: "⚖️",
+                lessons: [
+                    [cite_start]{ title: "المحكمة العليا", content: "<p>تتكون من 7 غرف وتراقب تطبيق القانون[cite: 2471].</p>" }
+                ],
+                questions: [
+                    { q: "كم عدد غرف المحكمة العليا؟", opts: ["5", "7", "10"], ans: 1, exp: "عددها 7 غرف متخصصة.", cite: "القانون العضوي" }
+                ],
+                flashcards: [
+                    { q: "المحكمة العليا", a: "محكمة قانون وليست محكمة موضوع" }
+                ]
+            },
+
+             // امتحان جزئي 2: أعوان القضاء
+             "auxiliaries_exam": {
+                title: "اختبار مساعدي القضاء",
+                desc: "أسئلة حول المحامين، الموثقين، والمحضرين.",
+                icon: "👥",
+                lessons: [
+                    [cite_start]{ title: "المحامي", content: "<p>مهنة حرة مستقلة، يشترط شهادة الكفاءة (CAPA)[cite: 2756].</p>" }
+                ],
+                questions: [
+                    { q: "من يحرر العقود الرسمية؟", opts: ["المحامي", "الموثق", "الخبير"], ans: 1, exp: "الموثق هو الضابط العمومي المخول بذلك.", cite: "قانون 06/02" }
+                ],
+                flashcards: [
+                    { q: "CAPA", a: "شهادة الكفاءة المهنية للمحاماة" }
+                ]
+            }
+        };
+
+        // ==========================================
+        // المحرك البرمجي (المنطق)
+        // ==========================================
+        let currentData = null;
+
+        const app = {
+            init: function() {
+                const container = document.getElementById('exams-container');
+                container.innerHTML = '';
+                
+                Object.keys(database).forEach(key => {
+                    const exam = database[key];
+                    container.innerHTML += `
+                        <div class="exam-card" onclick="app.openExam('${key}')">
+                            <span class="exam-icon">${exam.icon}</span>
+                            <div class="exam-title">${exam.title}</div>
+                            <div class="exam-desc">${exam.desc}</div>
+                        </div>
+                    `;
+                });
+            },
+
+            openExam: function(key) {
+                currentData = database[key];
+                document.getElementById('main-menu-view').classList.add('hidden');
+                document.getElementById('app-view').style.display = 'flex'; // تفعيل الـ flex
+                document.getElementById('sidebar-title').innerText = currentData.title;
+                
+                // تحميل الدروس
+                const contentDiv = document.getElementById('content-container');
+                contentDiv.innerHTML = currentData.lessons.map(l => `
+                    <div class="content-card">
+                        <h3>${l.title}</h3>
+                        <div>${l.content}</div>
+                    </div>
+                `).join('');
+                
+                this.switchTab('review');
+            },
+
+            goHome: function() {
+                document.getElementById('app-view').style.display = 'none';
+                document.getElementById('main-menu-view').classList.remove('hidden');
+            },
+
+            switchTab: function(tabId, btn) {
+                document.getElementById('review-tab').classList.add('hidden');
+                document.getElementById('quiz-tab').classList.add('hidden');
+                document.getElementById('flashcards-tab').classList.add('hidden');
+                document.getElementById(tabId + '-tab').classList.remove('hidden');
+
+                if(btn) {
+                    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                }
+            }
+        };
+
+        const quizManager = {
+            index: 0, score: 0,
+            
+            start: function() {
+                this.index = 0; this.score = 0;
+                document.getElementById('quiz-start-btn').classList.add('hidden');
+                document.getElementById('quiz-area').classList.remove('hidden');
+                this.showQuestion();
+            },
+
+            showQuestion: function() {
+                if(this.index >= currentData.questions.length) {
+                    alert(`انتهى الاختبار!\nالنتيجة النهائية: ${this.score} من ${currentData.questions.length}`);
+                    return location.reload(); // إعادة تحميل للسهولة
+                }
+                
+                const q = currentData.questions[this.index];
+                document.getElementById('q-text').innerText = q.q;
+                document.getElementById('q-progress').innerText = `سؤال ${this.index + 1} من ${currentData.questions.length}`;
+                document.getElementById('feedback').classList.add('hidden');
+                
+                const optsDiv = document.getElementById('q-options');
+                optsDiv.innerHTML = '';
+                
+                q.opts.forEach((opt, i) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    btn.innerText = opt;
+                    btn.onclick = () => this.check(i, btn);
+                    optsDiv.appendChild(btn);
+                });
+            },
+
+            check: function(selected, btn) {
+                const q = currentData.questions[this.index];
+                const allBtns = document.querySelectorAll('.option-btn');
+                allBtns.forEach(b => b.classList.add('disabled'));
+
+                document.getElementById('fb-exp').innerText = q.exp;
+                document.getElementById('fb-cite').innerText = "المصدر: " + q.cite;
+                document.getElementById('feedback').classList.remove('hidden');
+
+                if(selected === q.ans) {
+                    this.score++;
+                    btn.classList.add('correct');
+                    document.getElementById('fb-msg').innerText = "إجابة صحيحة! ✅";
+                    document.getElementById('fb-msg').style.color = "green";
+                } else {
+                    btn.classList.add('wrong');
+                    allBtns[q.ans].classList.add('correct');
+                    document.getElementById('fb-msg').innerText = "إجابة خاطئة ❌";
+                    document.getElementById('fb-msg').style.color = "red";
+                }
+                document.getElementById('score-display').innerText = `النتيجة: ${this.score}`;
+            },
+
+            next: function() {
+                this.index++;
+                this.showQuestion();
+            }
+        };
+
+        const flashcardManager = {
+            idx: 0, showAns: false,
+            
+            flip: function() {
+                this.showAns = !this.showAns;
+                this.render();
+            },
+            
+            next: function() {
+                this.idx = (this.idx + 1) % currentData.flashcards.length;
+                this.showAns = false;
+                this.render();
+            },
+
+            render: function() {
+                const card = currentData.flashcards[this.idx];
+                const face = document.getElementById('fc-face');
+                const text = document.getElementById('fc-text');
+                const sub = document.getElementById('fc-sub');
+                
+                if(this.showAns) {
+                    text.innerText = card.a;
+                    text.style.color = "#28a745";
+                    sub.innerText = `(المصدر: ${card.cite})`;
+                } else {
+                    text.innerText = card.q;
+                    text.style.color = "inherit";
+                    sub.innerText = "(اضغط لمعرفة الإجابة)";
+                }
+            }
+        };
+
+        window.onload = () => app.init();
+    </script>
+</body>
+</html>
