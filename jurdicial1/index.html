@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المنصة الشاملة: التنظيم القضائي الجزائري</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="logo-area">
+                <div class="logo-icon">⚖️</div>
+                <h1>القضاء الجزائري</h1>
+                <p>مراجعة شاملة 2024/2025</p>
+            </div>
+            
+            <nav class="nav-menu">
+                <button class="nav-btn active" onclick="app.switchTab('review')">
+                    <span class="icon">📚</span> الموسوعة والمراجعة
+                </button>
+                <button class="nav-btn" onclick="app.switchTab('quiz')">
+                    <span class="icon">📝</span> الاختبار الذكي
+                </button>
+                <button class="nav-btn" onclick="app.switchTab('flashcards')">
+                    <span class="icon">💡</span> بطاقات الذاكرة
+                </button>
+                <button class="nav-btn" onclick="app.switchTab('search')">
+                    <span class="icon">🔍</span> البحث المتقدم
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="theme-toggle" onclick="app.toggleDarkMode()">
+                    <span id="theme-icon">🌙</span> الوضع الليلي
+                </button>
+                <p class="credits">وفقاً لمطبوعة الأستاذة: هاشمي ف</p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <section id="review-section" class="tab-content active fade-in">
+                <header class="header-box">
+                    <h2>ملخصات الدروس والسندات القانونية</h2>
+                    <p>اضغط على أي بطاقة لعرض التفاصيل الكاملة</p>
+                </header>
+
+                <div class="pyramid-wrapper">
+                    <h3 class="pyramid-title">الهيكل الهرمي للنظام القضائي العادي</h3>
+                    <div class="pyramid-container">
+                        <div class="pyramid-level level-3" onclick="app.openModal('ordinary_courts')">
+                            <span>🏛️ المحكمة العليا (محكمة قانون)</span>
+                        </div>
+                        <div class="pyramid-level level-2" onclick="app.openModal('ordinary_courts')">
+                            <span>⚖️ المجالس القضائية (درجة ثانية)</span>
+                        </div>
+                        <div class="pyramid-level level-1" onclick="app.openModal('ordinary_courts')">
+                            <span>🏢 المحاكم (درجة أولى)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chapters-grid" id="chapters-container">
+                    </div>
+            </section>
+
+            <section id="quiz-section" class="tab-content hidden fade-in">
+                <header class="header-box">
+                    <h2>بنك الأسئلة الشامل (QCM)</h2>
+                    <div class="stats-row">
+                        <div class="stat-badge">أفضل نتيجة: <span id="high-score">0%</span></div>
+                        <div class="stat-badge">آخر اختبار: <span id="last-date">-</span></div>
+                    </div>
+                </header>
+
+                <div id="quiz-start-screen" class="quiz-intro">
+                    <div class="quiz-icon">🎓</div>
+                    <h3>جاهز للتحدي؟</h3>
+                    <p>اختبار مكون من أسئلة متعددة الخيارات وصح/خطأ تغطي كامل المقياس.</p>
+                    <button class="btn-primary large" onclick="quizManager.start()">ابدأ الاختبار الآن</button>
+                </div>
+
+                <div id="quiz-play-area" class="hidden">
+                    <div class="progress-container">
+                        <div class="progress-bar" id="quiz-progress"></div>
+                    </div>
+                    
+                    <div class="question-card">
+                        <div class="q-meta">
+                            <span id="q-number">سؤال 1</span>
+                            <span id="q-category" class="tag">عام</span>
+                        </div>
+                        <h3 id="q-text">نص السؤال...</h3>
+                        <div id="options-container" class="options-list">
+                            </div>
+                    </div>
+
+                    <div id="feedback-area" class="feedback-box hidden">
+                        <h4 id="fb-status">إجابة صحيحة!</h4>
+                        <p id="fb-text">الشرح...</p>
+                        <div class="citation" id="fb-source">المصدر</div>
+                        <button class="btn-next" onclick="quizManager.next()">التالي ⬅</button>
+                    </div>
+                </div>
+
+                <div id="quiz-results" class="quiz-end hidden">
+                    <div class="result-icon">🏆</div>
+                    <h2>نتيجة الاختبار</h2>
+                    <div class="score-display">
+                        <span id="final-score">0</span>%
+                    </div>
+                    <p id="result-msg">رسالة التقييم</p>
+                    <button class="btn-primary" onclick="quizManager.reset()">إعادة المحاولة</button>
+                </div>
+            </section>
+
+            <section id="flashcards-section" class="tab-content hidden fade-in">
+                <header class="header-box">
+                    <h2>بطاقات الذاكرة (Flashcards)</h2>
+                    <p>للحفظ السريع: اضغط على البطاقة لقلبها</p>
+                </header>
+
+                <div class="flashcard-wrapper">
+                    <div class="scene scene--card">
+                        <div class="card" onclick="flashcardManager.flip()">
+                            <div class="card__face card__face--front">
+                                <span class="card-icon">❓</span>
+                                <h3 id="fc-front">السؤال</h3>
+                                <p class="hint">اضغط للإجابة</p>
+                            </div>
+                            <div class="card__face card__face--back">
+                                <span class="card-icon">💡</span>
+                                <h3 id="fc-back">الإجابة</h3>
+                                <div class="citation" id="fc-source">المصدر</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="fc-controls">
+                        <button class="btn-secondary" onclick="flashcardManager.prev()">السابق</button>
+                        <span id="fc-counter">1 / 10</span>
+                        <button class="btn-secondary" onclick="flashcardManager.next()">التالي</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="search-section" class="tab-content hidden fade-in">
+                <header class="header-box">
+                    <h2>البحث في الموارد</h2>
+                    <div class="search-bar">
+                        <input type="text" id="search-input" placeholder="ابحث عن: المحكمة التجارية، الموثق، المادة 169..." onkeyup="app.search()">
+                        <span class="search-icon">🔍</span>
+                    </div>
+                </header>
+                <div id="search-results" class="results-grid"></div>
+            </section>
+
+        </main>
+    </div>
+
+    <div id="modal" class="modal-overlay hidden">
+        <div class="modal-box">
+            <button class="close-btn" onclick="app.closeModal()">×</button>
+            <div class="modal-header">
+                <span id="modal-icon" class="modal-icon-span">⚖️</span>
+                <h2 id="modal-title">العنوان</h2>
+            </div>
+            <div id="modal-content" class="modal-body"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
